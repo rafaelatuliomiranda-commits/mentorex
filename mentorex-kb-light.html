@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MentorEX Academy — Playbook Comercial</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF0E6;
+  --surface: #FFFFFF;
+  --surface2: #F5E8D8;
+  --border: #E8D5BE;
+  --border2: #D4B896;
+  --accent: #F07C10;
+  --accent-dim: rgba(240,124,16,0.08);
+  --accent-border: rgba(240,124,16,0.22);
+  --text: #3A3A3A;
+  --text-muted: #6A5A4A;
+  --text-dim: #9A8A7A;
+  --green: #2E7D52;
+  --green-dim: rgba(46,125,82,0.08);
+  --red: #C0392B;
+  --red-dim: rgba(192,57,43,0.08);
+  --blue: #2563A8;
+  --blue-dim: rgba(37,99,168,0.08);
+  --yellow: #A67C00;
+  --yellow-dim: rgba(166,124,0,0.08);
+  --sidebar-w: 248px;
+  --topbar-h: 52px;
+  --r: 8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; min-height: 100vh; display: flex; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+/* SIDEBAR */
+#sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 100; overflow-y: auto; overflow-x: hidden; transition: transform 0.28s ease; }
+#sidebar::-webkit-scrollbar { width: 3px; }
+#sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+.sidebar-logo { padding: 18px 16px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.logo-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: #FFFFFF; flex-shrink: 0; font-family: 'Poppins', sans-serif; }
+.logo-text { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.3; font-family: 'Poppins', sans-serif; }
+.logo-text span { font-size: 11px; font-weight: 400; color: var(--text-muted); display: block; margin-top: 1px; }
+.sidebar-section { padding: 6px 0; border-bottom: 1px solid var(--border); }
+.sidebar-section:last-child { border-bottom: none; }
+.sidebar-section-label { padding: 12px 16px 5px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); font-family: 'Poppins', sans-serif; }
+.nav-item { display: flex; align-items: center; gap: 8px; padding: 7px 16px; cursor: pointer; color: var(--text-muted); font-size: 13px; font-weight: 400; transition: all 0.12s; border-left: 2px solid transparent; user-select: none; }
+.nav-item:hover { background: var(--surface2); color: var(--text); border-left-color: var(--border2); }
+.nav-item.active { background: var(--accent-dim); color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+.nav-item .nav-icon { font-size: 12px; width: 14px; text-align: center; flex-shrink: 0; opacity: 0.6; }
+.nav-item.active .nav-icon { opacity: 1; }
+
+/* TOPBAR */
+#topbar { position: fixed; top: 0; left: var(--sidebar-w); right: 0; height: var(--topbar-h); background: rgba(250,240,230,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 28px; z-index: 90; gap: 12px; }
+#page-title { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; font-family: 'Poppins', sans-serif; }
+.topbar-tag { background: var(--accent-dim); color: var(--accent); font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.04em; border: 1px solid var(--accent-border); }
+#hamburger { display: none; background: none; border: 1px solid var(--border); color: var(--text); padding: 5px 9px; border-radius: 5px; cursor: pointer; font-size: 14px; }
+
+/* MAIN */
+#main { margin-left: var(--sidebar-w); margin-top: var(--topbar-h); flex: 1; overflow-y: auto; height: calc(100vh - var(--topbar-h)); }
+#main::-webkit-scrollbar { width: 4px; }
+#main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.page { display: none; padding: 36px 44px 80px; max-width: 900px; animation: fadeIn 0.2s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* TYPOGRAPHY */
+h1 { font-size: 26px; font-weight: 700; line-height: 1.2; color: var(--accent); margin-bottom: 10px; letter-spacing: -0.3px; font-family: 'Poppins', sans-serif; }
+h2 { font-size: 17px; font-weight: 700; color: var(--accent); margin: 36px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); letter-spacing: -0.2px; font-family: 'Poppins', sans-serif; }
+h3 { font-size: 14px; font-weight: 600; color: var(--text); margin: 24px 0 8px; font-family: 'Poppins', sans-serif; }
+p { color: var(--text-muted); margin-bottom: 12px; }
+strong { color: var(--text); font-weight: 500; }
+ul, ol { padding-left: 18px; color: var(--text-muted); }
+li { margin-bottom: 5px; line-height: 1.6; }
+.page-intro { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; line-height: 1.7; max-width: 640px; }
+
+/* HERO STATS */
+.hero-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin: 22px 0 30px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px; }
+.stat-value { font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 5px; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; font-family: 'Poppins', sans-serif; }
+.stat-label { font-size: 11px; color: var(--text-dim); font-weight: 500; }
+
+/* KPI CARDS */
+.kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 18px 0; }
+.kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; border-top: 2px solid var(--border2); }
+.kpi-card.kpi-warn { border-top-color: var(--accent); }
+.kpi-card.kpi-ok { border-top-color: var(--green); }
+.kpi-card.kpi-info { border-top-color: var(--blue); }
+.kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); font-weight: 600; margin-bottom: 7px; }
+.kpi-value { font-size: 24px; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 3px; letter-spacing: -0.5px; font-family: 'Poppins', sans-serif; }
+.kpi-value.warn { color: var(--accent); }
+.kpi-value.ok { color: var(--green); }
+.kpi-value.info { color: var(--blue); }
+.kpi-sub { font-size: 11px; color: var(--text-dim); }
+
+/* FORMULA */
+.formula-box { background: var(--surface); border: 1px solid var(--accent-border); border-radius: var(--r); padding: 16px 20px; margin: 16px 0; }
+.formula-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+.formula { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text); line-height: 1.8; }
+.formula-result { margin-top: 8px; color: var(--accent); font-weight: 500; font-size: 13px; }
+
+/* SCRIPT */
+.script-box { background: #EEF4FA; border: 1px solid #C5D8EC; border-radius: var(--r); padding: 16px 20px; margin: 14px 0; }
+.script-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); font-weight: 600; margin-bottom: 10px; }
+.script-box p { color: #3A5A7A; font-size: 13px; line-height: 1.7; margin-bottom: 6px; }
+.script-role { color: var(--blue); font-weight: 600; font-size: 12px; margin-bottom: 4px; }
+
+/* ACCORDION */
+.accordion { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 14px 0; }
+.accordion-item { border-bottom: 1px solid var(--border); }
+.accordion-item:last-child { border-bottom: none; }
+.accordion-header { width: 100%; background: var(--surface); border: none; padding: 13px 16px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--text); transition: background 0.12s; gap: 12px; }
+.accordion-header:hover { background: var(--surface2); }
+.acc-icon { color: var(--text-dim); transition: transform 0.22s; font-size: 11px; flex-shrink: 0; }
+.accordion-item.open .acc-icon { transform: rotate(180deg); color: var(--accent); }
+.accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.32s ease; background: var(--bg); }
+.accordion-body-inner { padding: 14px 16px 18px; }
+.accordion-body p { font-size: 13px; }
+
+/* FUNNEL */
+.funnel { margin: 20px 0; }
+.funnel-stage { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); margin-bottom: 5px; transition: border-color 0.15s; }
+.funnel-stage:hover { border-color: var(--border2); }
+.funnel-num { font-size: 15px; font-weight: 700; color: var(--accent); width: 24px; flex-shrink: 0; }
+.funnel-info { flex: 1; }
+.funnel-name { font-weight: 600; font-size: 13px; color: var(--text); margin-bottom: 1px; }
+.funnel-desc { font-size: 12px; color: var(--text-dim); }
+.funnel-meta { text-align: right; }
+.funnel-rate { font-size: 14px; font-weight: 700; color: var(--green); }
+.funnel-sla { font-size: 11px; color: var(--text-dim); }
+.funnel-arrow { text-align: center; color: var(--text-dim); font-size: 11px; margin: 1px 0; }
+
+/* CHECKLIST */
+.checklist { margin: 14px 0; }
+.checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.checklist-item:last-child { border-bottom: none; }
+.check-box { width: 18px; height: 18px; border: 1.5px solid var(--border2); border-radius: 4px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.12s; }
+.check-box:hover { border-color: var(--accent); }
+.check-box.checked { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+.check-box.checked::after { content: '✓'; font-size: 11px; font-weight: 700; }
+.check-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+/* RITUAL */
+.ritual-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 18px 0; }
+.ritual-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; }
+.ritual-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.ritual-name { font-weight: 600; font-size: 14px; color: var(--text); }
+.ritual-freq { font-size: 11px; color: var(--accent); font-weight: 500; }
+.ritual-card ul { padding-left: 14px; }
+.ritual-card li { font-size: 12px; color: var(--text-muted); margin-bottom: 3px; }
+
+/* TIMELINE */
+.timeline { margin: 18px 0; position: relative; padding-left: 28px; }
+.timeline::before { content: ''; position: absolute; left: 8px; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
+.timeline-item { position: relative; margin-bottom: 20px; }
+.timeline-dot { position: absolute; left: -24px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.timeline-label { font-weight: 600; font-size: 12px; color: var(--accent); margin-bottom: 3px; }
+.timeline-content { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* BUILD STEPS */
+.build-steps { margin: 18px 0; }
+.build-step { display: flex; gap: 14px; padding: 15px 0; border-bottom: 1px solid var(--border); }
+.build-step:last-child { border-bottom: none; }
+.step-num { width: 30px; height: 30px; border-radius: 6px; background: var(--surface2); border: 1px solid var(--border2); color: var(--accent); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-content h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.step-content p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+/* PHASE HEADER */
+.phase-header { background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: var(--r); padding: 12px 16px; margin: 24px 0 14px; display: flex; align-items: center; gap: 10px; }
+.phase-label { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; flex-shrink: 0; }
+.phase-title { font-size: 14px; font-weight: 600; color: var(--text); }
+
+/* INFO BOXES */
+.highlight-box { background: var(--green-dim); border: 1px solid rgba(46,125,82,0.2); border-radius: var(--r); padding: 13px 16px; margin: 14px 0; }
+.highlight-box p { color: #1E6B42; font-size: 13px; margin: 0; }
+.info-box { background: var(--blue-dim); border: 1px solid rgba(37,99,168,0.2); border-radius: var(--r); padding: 13px 16px; margin: 14px 0; }
+.info-box p { color: #1A4E80; font-size: 13px; margin: 0; }
+.warning-box { background: var(--red-dim); border: 1px solid rgba(192,57,43,0.2); border-radius: var(--r); padding: 13px 16px; margin: 14px 0; }
+.warning-box p { color: #8B2919; font-size: 13px; margin: 0; }
+.yellow-box { background: var(--yellow-dim); border: 1px solid rgba(166,124,0,0.2); border-radius: var(--r); padding: 13px 16px; margin: 14px 0; }
+.yellow-box p { color: #C9A94A; font-size: 13px; margin: 0; }
+
+/* GRIDS */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 16px 0; }
+.col-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px; }
+.col-card h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 9px; }
+.col-card p, .col-card li { font-size: 12.5px; }
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.comp-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 18px; }
+.comp-card.featured { border-color: var(--accent-border); background: var(--accent-dim); }
+.comp-card h4 { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+.comp-card.featured h4 { color: var(--accent); }
+.comp-card li { font-size: 12.5px; }
+.onb-weeks { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 16px 0; }
+.onb-week { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px; border-top: 2px solid var(--accent); }
+.onb-week-label { font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.onb-week-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+.onb-week li { font-size: 12px; margin-bottom: 3px; }
+
+/* TABLE */
+.kb-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.kb-table th { background: var(--surface2); padding: 9px 12px; text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-dim); border-bottom: 1px solid var(--border); }
+.kb-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: top; }
+.kb-table tr:last-child td { border-bottom: none; }
+.kb-table tr:hover td { background: var(--surface); }
+
+/* BADGE */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.badge-green { background: var(--green-dim); color: #1E6B42; }
+.badge-orange { background: var(--accent-dim); color: var(--accent); }
+.badge-red { background: var(--red-dim); color: #8B2919; }
+.badge-blue { background: var(--blue-dim); color: var(--blue); }
+
+/* ROI CARD */
+.roi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; margin: 14px 0; }
+.roi-card-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 14px; }
+.roi-numbers { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.roi-num { text-align: center; }
+.roi-val { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
+.roi-lbl { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
+
+/* SIMULATOR */
+.sim-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 14px 0; font-size: 12px; }
+.sim-header { background: var(--surface2); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-dim); padding: 9px 12px; }
+.sim-cell { padding: 10px 12px; border-top: 1px solid var(--border); color: var(--text-muted); }
+.sim-cell.label { color: var(--text); font-weight: 500; background: var(--surface); }
+.sim-cell.highlight { color: var(--accent); font-weight: 600; }
+.sim-cell.good { color: var(--green); font-weight: 600; }
+
+/* LINK BUTTON */
+.link-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.15s; margin: 4px 0; }
+.link-btn:hover { background: rgba(232,128,58,0.2); }
+
+/* FOST LANDING */
+.fost-nav-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin: 24px 0; }
+.fost-nav-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 20px 22px; cursor: pointer; transition: all 0.15s; border-left: 3px solid var(--accent); position: relative; }
+.fost-nav-card:hover { background: var(--accent-dim); box-shadow: 0 2px 12px rgba(240,124,16,0.10); }
+.fost-nav-card h4 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 5px; font-family: 'Poppins', sans-serif; }
+.fost-nav-card p { font-size: 12.5px; color: var(--text-muted); margin: 0; }
+.fost-nav-card .nav-arrow { font-size: 20px; color: var(--accent); position: absolute; top: 18px; right: 18px; opacity: 0.5; }
+
+/* MOBILE */
+#sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 95; }
+@media (max-width: 768px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: none; }
+  #sidebar-overlay.open { display: block; }
+  #topbar { left: 0; }
+  #main { margin-left: 0; }
+  #hamburger { display: block; }
+  .page { padding: 20px 16px 60px; }
+  .hero-stats, .kpi-grid, .ritual-grid, .two-col, .three-col, .comp-grid, .onb-weeks, .roi-numbers, .sim-grid, .fost-nav-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">M</div>
+    <div class="logo-text">MentorEX Academy<span>Playbook Comercial</span></div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Visão Geral</div>
+    <div class="nav-item active" data-page="home" onclick="navigate('home','Home','KB')"><span class="nav-icon">—</span> Home</div>
+    <div class="nav-item" data-page="icp" onclick="navigate('icp','ICP & Segmentação','Estratégia')"><span class="nav-icon">—</span> ICP & Segmentação</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Processo Comercial</div>
+    <div class="nav-item" data-page="funil" onclick="navigate('funil','Funil & Pipeline','Processo')"><span class="nav-icon">—</span> Funil & Pipeline</div>
+    <div class="nav-item" data-page="playbook" onclick="navigate('playbook','Playbook de Vendas','Processo')"><span class="nav-icon">—</span> Playbook de Vendas</div>
+    <div class="nav-item" data-page="proposta" onclick="navigate('proposta','Proposta & Fechamento','Processo')"><span class="nav-icon">—</span> Proposta & Fechamento</div>
+    <div class="nav-item" data-page="objecoes" onclick="navigate('objecoes','Gestão de Objeções','Processo')"><span class="nav-icon">—</span> Gestão de Objeções</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Operação</div>
+    <div class="nav-item" data-page="kpis" onclick="navigate('kpis','Indicadores & KPIs','Operação')"><span class="nav-icon">—</span> Indicadores & KPIs</div>
+    <div class="nav-item" data-page="rituais" onclick="navigate('rituais','Rituais da Área','Operação')"><span class="nav-icon">—</span> Rituais da Área</div>
+    <div class="nav-item" data-page="rotina" onclick="navigate('rotina','Rotina do Executivo','Operação')"><span class="nav-icon">—</span> Rotina do Executivo</div>
+    <div class="nav-item" data-page="crm-uso" onclick="navigate('crm-uso','CRM & Cadências','Operação')"><span class="nav-icon">—</span> CRM & Cadências</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Scripts & Ferramentas</div>
+    <div class="nav-item" data-page="scripts" onclick="navigate('scripts','Scripts de Abordagem','Ferramentas')"><span class="nav-icon">—</span> Scripts de Abordagem</div>
+    <div class="nav-item" data-page="recompra" onclick="navigate('recompra','Recompra & Expansão','Ferramentas')"><span class="nav-icon">—</span> Recompra & Expansão</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Pessoas</div>
+    <div class="nav-item" data-page="onboarding" onclick="navigate('onboarding','Onboarding','Pessoas')"><span class="nav-icon">—</span> Onboarding</div>
+    <div class="nav-item" data-page="perfil" onclick="navigate('perfil','Perfil & Competências','Pessoas')"><span class="nav-icon">—</span> Perfil & Competências</div>
+  </div>
+  <div class="sidebar-section" id="fost-section" style="background:rgba(240,124,16,0.04); border-top: 1px solid rgba(240,124,16,0.25);">
+    <div class="sidebar-section-label" style="color:var(--accent); display:flex; align-items:center; gap:6px; cursor:pointer;" onclick="navigate('cf-home','Consultoria Fost','Fost')">
+      <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;"></span>
+      Consultoria Fost
+    </div>
+    <div class="nav-item" data-page="cf-home" onclick="navigate('cf-home','Consultoria Fost','Fost')"><span class="nav-icon">—</span> Visão Geral</div>
+    <div class="nav-item" data-page="cf-icp" onclick="navigate('cf-icp','ICP','Fost')"><span class="nav-icon">—</span> ICP</div>
+    <div class="nav-item" data-page="cf-proposta" onclick="navigate('cf-proposta','Modelo de Proposta','Fost')"><span class="nav-icon">—</span> Modelo de Proposta</div>
+    <div class="nav-item" data-page="cf-crm" onclick="navigate('cf-crm','CRM','Fost')"><span class="nav-icon">—</span> CRM</div>
+    <div class="nav-item" data-page="cf-challenger" onclick="navigate('cf-challenger','The Challenger Sales','Fost')"><span class="nav-icon">—</span> Challenger Sales</div>
+    <div class="nav-item" data-page="cf-capacity" onclick="navigate('cf-capacity','Capacity & Metas','Fost')"><span class="nav-icon">—</span> Capacity & Metas</div>
+    <div class="nav-item" data-page="cf-gtm" onclick="navigate('cf-gtm','GTM Outbound','Fost')"><span class="nav-icon">—</span> GTM Outbound</div>
+  </div>
+</nav>
+<div id="topbar">
+  <button id="hamburger" onclick="toggleSidebar()">☰</button>
+  <div id="page-title">Home</div>
+  <span class="topbar-tag" id="page-tag">KB</span>
+  <span class="topbar-tag" style="cursor:pointer;background:rgba(240,124,16,0.12);border-color:rgba(240,124,16,0.4)" onclick="navigate('cf-home','Consultoria Fost','Fost');setTimeout(()=>document.getElementById('fost-section').scrollIntoView({behavior:'smooth'}),100)">&#9679; Consultoria Fost</span>
+</div>
+<main id="main">
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <h1>Playbook Comercial<br>MentorEX Academy</h1>
+  <p class="page-intro">Central de conhecimento do time comercial — processo, scripts, KPIs, rituais e recomendações da consultoria Fost.</p>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-value">~R$205k</div><div class="stat-label">Faturamento mensal atual</div></div>
+    <div class="stat-card"><div class="stat-value">R$108k</div><div class="stat-label">Ticket médio</div></div>
+    <div class="stat-card"><div class="stat-value">8%</div><div class="stat-label">Taxa de conversão #</div></div>
+    <div class="stat-card"><div class="stat-value">4 meses</div><div class="stat-label">Ciclo médio de vendas</div></div>
+  </div>
+  <h2>Sobre a MentorEX Academy</h2>
+  <p>Escola de Gestão e Liderança fundada por Andrea Pauli, Bruno Capobianco e Paulo Guilherme. Método exclusivo <strong>LTP — Lead to Perform</strong> com mais de 30 anos de experiência prática dos fundadores. Foco em médias e grandes empresas do Sul do Brasil.</p>
+  <div class="two-col">
+    <div class="col-card"><h4>O que vendemos</h4><ul><li>Trilhas de Liderança (Método LTP) — 6 módulos × 4h</li><li>Mentorias individuais e em grupo</li><li>Workshops, imersões e palestras</li><li>Programas customizados + Curadoria DHO</li></ul></div>
+    <div class="col-card"><h4>Diferenciais</h4><ul><li>Método LTP próprio, validado em múltiplos portes e segmentos</li><li>Abordagem bottom-up — inclui a voz dos liderados</li><li>Trilhas 100% personalizadas por empresa</li><li>Integração de cultura + desenvolvimento + desempenho</li></ul></div>
+  </div>
+  <h2>Momento Atual &amp; Prioridades - Comercial</h2>
+  <div class="warning-box"><p><strong>Prioridade #1 (diagnóstico Fost):</strong> Taxa de conversão de 8% está abaixo do benchmark de consultoria B2B (40–60%). Antes de escalar topo de funil, trabalhar a conversão — cada ponto percentual ganho reduz o esforço de prospecção em ~10%.</p></div>
+  <div class="info-box"><p><strong>Contexto:</strong> PG dedicado ao comercial. CRM construído internamente. Canais ativos: indicação, recompra, outbound via LinkedIn e retomada de dormentes. Processo em validação — automatizar apenas o que já funciona.</p></div>
+  <h2>Navegue pelo Playbook</h2>
+  <div class="three-col">
+    <div class="col-card" style="cursor:pointer" onclick="navigate('funil','Funil & Pipeline','Processo')"><h4>Funil & Pipeline</h4><p>Estágios, critérios de avanço e SLAs.</p></div>
+    <div class="col-card" style="cursor:pointer" onclick="navigate('playbook','Playbook de Vendas','Processo')"><h4>Playbook de Vendas</h4><p>Passo a passo da venda consultiva.</p></div>
+    <div class="col-card" style="cursor:pointer" onclick="navigate('cf-gtm','GTM Outbound','Fost')"><h4>GTM Outbound</h4><p>Estratégia detalhada de prospecção ativa.</p></div>
+    <div class="col-card" style="cursor:pointer" onclick="navigate('objecoes','Gestão de Objeções','Processo')"><h4>Objeções</h4><p>As 5 objeções mais frequentes com respostas.</p></div>
+    <div class="col-card" style="cursor:pointer" onclick="navigate('cf-capacity','Capacity & Metas','Fost')"><h4>Capacity & Metas</h4><p>Simulador de cenários com planilha.</p></div>
+    <div class="col-card" style="cursor:pointer" onclick="navigate('cf-challenger','Challenger Sales','Fost')"><h4>Challenger Sales</h4><p>Framework para aumentar a conversão.</p></div>
+  </div>
+</div>
+<!-- ICP -->
+<div class="page" id="page-icp">
+  <h1>ICP & Segmentação</h1>
+  <p class="page-intro">Perfil de cliente ideal — quem compra, quem decide e quem priorizar.</p>
+  <h2>Perfil de Cliente Ideal</h2>
+  <div class="two-col">
+    <div class="col-card"><h4>Firmografia</h4><ul><li><strong>Porte:</strong> Médias e grandes empresas</li><li><strong>Região:</strong> Sul do Brasil (foco atual)</li><li><strong>Segmentos:</strong> Logística, financeiro, varejo, cooperativas, indústria, saúde corporativa</li><li><strong>Faturamento:</strong> R$30M+ (capacidade de investir ~R$100k em T&D)</li><li><strong>Estrutura:</strong> Área de RH ou DHO ativa</li></ul></div>
+    <div class="col-card"><h4>Contexto Organizacional Ideal</h4><ul><li>Empresa em crescimento acelerado ou mudança estrutural</li><li>Pipeline de liderança com gaps identificados</li><li>Direção entende liderança como alavanca de resultado</li><li>Histórico de investimento em T&D</li><li>Ainda não atingiu objetivos por falta de liderança preparada</li></ul></div>
+  </div>
+  <h2>Mapa de Decisores</h2>
+  <table class="kb-table">
+    <thead><tr><th>Persona</th><th>Papel</th><th>Dor Principal</th><th>O que importa</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Gestor de RH / DHO</strong></td><td>Influenciador / Campeão</td><td>Não consegue provar ROI de treinamentos para a diretoria</td><td>Metodologia, resultados tangíveis, apoio na implementação</td></tr>
+      <tr><td><strong>CEO / Diretor Executivo</strong></td><td>Decisor Final</td><td>Crescimento travado por líderes despreparados; alta rotatividade</td><td>ROI, referências comparáveis, prazo de resultado</td></tr>
+      <tr><td><strong>Diretor de Operações</strong></td><td>Patrocinador ou Veto</td><td>Líderes sem autonomia; retrabalho e escalada excessiva</td><td>Aplicabilidade prática, velocidade de absorção</td></tr>
+      <tr><td><strong>CFO</strong></td><td>Aprovador de Budget</td><td>Custo de turnover de gestores e erros de liderança</td><td>Investimento vs. custo do problema não resolvido</td></tr>
+    </tbody>
+  </table>
+  <h2>Perfis para Não Prospectar</h2>
+  <div class="warning-box"><p><strong>Evitar:</strong> Portfólio MentorEX quase integralmente entregue (baixo potencial de expansão) · Empresas que pressionam muito por desconto · Sem RH estruturado (sem campeão interno) · Direção que não vê liderança como prioridade</p></div>
+  <h2>Lead Quente vs. Lead Frio</h2>
+  <div class="two-col">
+    <div class="col-card"><h4 style="color:var(--green)">Lead Quente</h4><ul><li>Vem por indicação de cliente satisfeito</li><li>Empresa em mudança recente de liderança ou reestruturação</li><li>RH já identificou e documentou gaps</li><li>Diretor patrocina ativamente</li><li>Orçamento aprovado ou em aprovação</li><li>Contato anterior com a MentorEX (recompra ou retomada)</li></ul></div>
+    <div class="col-card"><h4 style="color:var(--red)">Lead Frio</h4><ul><li>Prospecção outbound sem conexão prévia</li><li>RH interessado, diretoria ainda não envolvida</li><li>Orçamento não definido</li><li>Empresa acabou de fechar com concorrente</li><li>Sem resposta no LinkedIn</li></ul></div>
+  </div>
+</div>
+<!-- FUNIL -->
+<div class="page" id="page-funil">
+  <h1>Funil & Pipeline</h1>
+  <p class="page-intro">Estágios do processo comercial com critérios de entrada e SLAs de avanço.</p>
+  <div class="info-box"><p><strong>Referência:</strong> Ciclo médio de 4 meses. Recompras e indicações aquecidas fecham em 3–7 dias. Use a média como referência, não como regra absoluta.</p></div>
+  <h2>Estágios</h2>
+  <div class="funnel">
+    <div class="funnel-stage"><div class="funnel-num">1</div><div class="funnel-info"><div class="funnel-name">Prospecção / Lead Identificado</div><div class="funnel-desc">Via indicação, outbound, retomada ou evento. Registrar no CRM imediatamente.</div></div><div class="funnel-meta"><div class="funnel-rate">—</div><div class="funnel-sla">Entrada no CRM</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">2</div><div class="funnel-info"><div class="funnel-name">Contato Inicial / Conexão</div><div class="funnel-desc">Primeiro toque personalizado. Objetivo: marcar reunião de diagnóstico.</div></div><div class="funnel-meta"><div class="funnel-rate">~15%</div><div class="funnel-sla">Resp. em 48h</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">3</div><div class="funnel-info"><div class="funnel-name">Reunião de Diagnóstico</div><div class="funnel-desc">Discovery com SPIN. Validar fit, mapear decisores, entender urgência.</div></div><div class="funnel-meta"><div class="funnel-rate">60–70%</div><div class="funnel-sla">Agenda &lt;7 dias</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">4</div><div class="funnel-info"><div class="funnel-name">Proposta em Desenvolvimento</div><div class="funnel-desc">Customização da solução com ROI e plano de execução.</div></div><div class="funnel-meta"><div class="funnel-rate">80%</div><div class="funnel-sla">Proposta em &lt;5 dias</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">5</div><div class="funnel-info"><div class="funnel-name">Apresentação de Proposta</div><div class="funnel-desc">Apresentar (nunca só enviar). Reunião dedicada com decisores.</div></div><div class="funnel-meta"><div class="funnel-rate">~30%</div><div class="funnel-sla">Apres. em &lt;3 dias</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">6</div><div class="funnel-info"><div class="funnel-name">Negociação & Ajuste</div><div class="funnel-desc">Tratar objeções, ajustar escopo, confirmar datas e decisores.</div></div><div class="funnel-meta"><div class="funnel-rate">—</div><div class="funnel-sla">Follow-up 48h</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage" style="border-color:rgba(92,184,122,0.3)"><div class="funnel-num" style="color:var(--green)">7</div><div class="funnel-info"><div class="funnel-name">Fechamento / Contrato</div><div class="funnel-desc">Proposta aprovada, contrato assinado, kickoff agendado.</div></div><div class="funnel-meta"><div class="funnel-rate" style="color:var(--green)">Won</div><div class="funnel-sla">Kickoff &lt;15 dias</div></div></div>
+  </div>
+  <h2>Fórmulas de Pipeline</h2>
+  <div class="formula-box">
+    <div class="formula-label">Meta de Leads — funil de trás pra frente</div>
+    <div class="formula">Fechamentos/mês = Receita alvo ÷ Ticket médio
+Leads/mês      = Fechamentos ÷ Taxa de conversão
+Leads/semana   = Leads/mês ÷ 4</div>
+    <div class="formula-result">Com 20% de conversão e 12 fechamentos/mês → 60 leads/mês (vs 150 com 8% atual)</div>
+  </div>
+</div>
+<!-- PLAYBOOK -->
+<div class="page" id="page-playbook">
+  <h1>Playbook de Vendas</h1>
+  <p class="page-intro">O processo consultivo da MentorEX do primeiro contato ao kickoff.</p>
+  <div class="info-box"><p>A venda da MentorEX é <strong>consultiva e de alta autoridade</strong>. O cliente compra confiança, metodologia e o histórico dos fundadores. Cada etapa precisa reforçar isso.</p></div>
+  <div class="phase-header"><div class="phase-label">Fase 1</div><div class="phase-title">Prospecção & Qualificação Inicial</div></div>
+  <div class="build-steps">
+    <div class="build-step"><div class="step-num">1</div><div class="step-content"><h4>Identificar e registrar no CRM imediatamente</h4><p>Origem, nome, empresa, cargo, próxima ação com prazo. Zero leads fora do CRM.</p></div></div>
+    <div class="build-step"><div class="step-num">2</div><div class="step-content"><h4>Validar fit com ICP antes de investir tempo</h4><p>Menos de 3 critérios batendo = lead frio → cadência longa, menor investimento de tempo.</p></div></div>
+    <div class="build-step"><div class="step-num">3</div><div class="step-content"><h4>Primeiro contato sempre personalizado</h4><p>Pesquise a empresa, mencione algo específico. Mensagem genérica converte 3–5× menos.</p></div></div>
+  </div>
+  <div class="phase-header"><div class="phase-label">Fase 2</div><div class="phase-title">Reunião de Diagnóstico — SPIN Selling</div></div>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>S — Situação: perguntas de contexto</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>"Como está estruturada a liderança hoje?" · "Quantos gestores e em quais níveis?" · "Já realizaram programas de desenvolvimento antes? Como foi?" · "Qual o principal desafio de crescimento atual?"</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>P — Problema: perguntas de dor</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>"A liderança atual está suportando o ritmo de crescimento?" · "O que acontece quando um gestor precisa decidir sem você por perto?" · "Quanto tempo você gasta resolvendo problemas que deveriam ser resolvidos pelos gestores?"</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>I — Implicação: perguntas de impacto</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>"Se isso continuar por mais 12 meses, como impacta o objetivo X?" · "Quanto custa em turnover e retrabalho?" · "O que acontece com a cultura se os gestores continuarem sem desenvolvimento?"</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>N — Necessidade: perguntas de valor</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>"Se você pudesse desenhar o programa ideal, como seria?" · "O que é mais importante: velocidade, profundidade ou abrangência?" · "Como mediria o sucesso 6 meses depois?"</p></div></div></div>
+  </div>
+  <div class="highlight-box"><p><strong>Ao sair do diagnóstico confirme:</strong> Nomes dos decisores · Prazo esperado para decisão · Orçamento indicativo · Próximos passos com data. Nunca saia sem esses 4 dados.</p></div>
+  <div class="phase-header"><div class="phase-label">Fase 3</div><div class="phase-title">Construção e Apresentação da Proposta</div></div>
+  <p>Ver seção <strong>Proposta & Fechamento</strong> para estrutura completa com as melhorias da Fost.</p>
+  <div class="phase-header"><div class="phase-label">Fase 4</div><div class="phase-title">Follow-up, Negociação e Fechamento</div></div>
+  <div class="build-steps">
+    <div class="build-step"><div class="step-num">1</div><div class="step-content"><h4>Follow-up em 48h após apresentação</h4><p>Não espere o cliente voltar. Envie resumo, reforce pontos de impacto, pergunte sobre próximos passos internos.</p></div></div>
+    <div class="build-step"><div class="step-num">2</div><div class="step-content"><h4>Cadência sem ser invasivo</h4><p>5 dias sem resposta → toque suave. 10 dias → novo ângulo. 15 dias → urgência ou oferta de ajuste de escopo.</p></div></div>
+    <div class="build-step"><div class="step-num">3</div><div class="step-content"><h4>Flexibilidade de escopo, não de valor</h4><p>Pressão por desconto → ofereça alternativas de escopo. Nunca desconto sem contrapartida.</p></div></div>
+  </div>
+</div>
+<!-- PROPOSTA -->
+<div class="page" id="page-proposta">
+  <h1>Proposta & Fechamento</h1>
+  <p class="page-intro">Estrutura e técnicas para propostas de alto valor — com as melhorias recomendadas pela consultoria Fost.</p>
+  <h2>Estrutura Obrigatória</h2>
+  <div class="build-steps">
+    <div class="build-step"><div class="step-num">1</div><div class="step-content"><h4>Espelho do Diagnóstico</h4><p>Repita o problema com as palavras do cliente. Mostra que você ouviu e entendeu. Cria conexão imediata.</p></div></div>
+    <div class="build-step"><div class="step-num">2</div><div class="step-content"><h4>O Custo do Problema Não Resolvido</h4><p>Tangibilize: turnover, improdutividade, erros de decisão, escalada para diretoria. Ver Calculadora ROI abaixo.</p></div></div>
+    <div class="build-step"><div class="step-num">3</div><div class="step-content"><h4>A Solução Proposta</h4><p>Trilha customizada: módulos, formato, carga horária, público-alvo. Destaque o que é único para essa empresa.</p></div></div>
+    <div class="build-step"><div class="step-num">4</div><div class="step-content"><h4>Método LTP — Por que funciona</h4><p>3 pilares: Desenvolvimento + Cultura + Desempenho. Abordagem bottom-up. Validado em todos os portes e segmentos.</p></div></div>
+    <div class="build-step"><div class="step-num">5</div><div class="step-content"><h4>Casos de Referência</h4><p>Conecte o caso ao contexto do prospect. "Você mencionou X — a BBM tinha exatamente esse desafio."</p></div></div>
+    <div class="build-step"><div class="step-num">6</div><div class="step-content"><h4>Plano de Execução</h4><p>Datas, responsabilidades, o que a empresa precisa prover. Reduz percepção de risco.</p></div></div>
+    <div class="build-step"><div class="step-num">7</div><div class="step-content"><h4>Investimento + ROI + Próximos Passos</h4><p>Apresente o valor após construir o contexto. Nunca abra com preço. Ver melhorias Fost abaixo.</p></div></div>
+  </div>
+  <h2>Melhorias Recomendadas — Consultoria Fost</h2>
+  <div class="yellow-box"><p>Construídas a partir do case Frísia. Adapte valores, datas e contextos para cada cliente — o princípio estrutural permanece o mesmo.</p></div>
+  <h3>1. ROI no Slide de Investimento — "O que custa não fazer nada"</h3>
+  <div class="roi-card">
+    <div class="roi-card-title">Calculadora de Custo de Turnover — Case Frísia</div>
+    <div class="roi-numbers">
+      <div class="roi-num"><div class="roi-val" style="color:var(--text-muted)">R$72k</div><div class="roi-lbl">Custo anual por trainee</div></div>
+      <div class="roi-num"><div class="roi-val" style="color:var(--red)">R$168k</div><div class="roi-lbl">Custo turnover de 2 trainees</div></div>
+      <div class="roi-num"><div class="roi-val" style="color:var(--green)">7×</div><div class="roi-lbl">ROI se evitar as saídas</div></div>
+    </div>
+  </div>
+  <div class="script-box"><div class="script-label">Texto para o slide — copie e adapte</div><p>"A [empresa] investiu em um processo seletivo criterioso para escolher [N] trainees. Cada um tem custo anual estimado de R$[X] em remuneração (base R$[Y]/mês), fora benefícios, PPR e horas de gestão. Se [2] desses [N] saírem nos primeiros 12 meses — número conservador dado o benchmark nacional de turnover de trainees — o custo de reposição fica entre R$[X×0,5] e R$[X] cada, totalizando R$[total] em perdas. O módulo custa R$[investimento]. Ele precisa evitar a saída de menos de 1 [público-alvo] para se pagar."</p></div>
+  <h3>2. Urgência Real na Página de Preço</h3>
+  <div class="script-box"><div class="script-label">Bloco de urgência — slide ou e-mail de follow-up</div><p>"[Público-alvo] formam seus padrões de comportamento e percepção da empresa nos primeiros [60/90] dias. Este módulo está desenhado para essa janela. Depois dela, você não estará desenvolvendo — estará corrigindo."</p></div>
+  <div class="warning-box"><p><strong>Atenção:</strong> Use urgência apenas quando for genuína. Urgência falsa destrói a credibilidade para todas as propostas futuras.</p></div>
+  <h3>3. Próximo Passo Explícito ao Final</h3>
+  <div class="script-box"><div class="script-label">Slide final obrigatório</div><p>"Próximos passos:<br>1. Confirme sua decisão respondendo este e-mail ou pelo WhatsApp até [data].<br>2. A MentorEX inicia a curadoria e customização dos materiais.<br>3. Em [data do módulo], [público-alvo] vivem o Módulo '[Nome]'.<br><br>Alguma dúvida antes de avançar? Estamos disponíveis para uma conversa rápida."</p></div>
+  <h3>4. Por que a MentorEX — Três Fatos sem Retórica</h3>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Fato 1 — Conhecimento interno exclusivo da empresa</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>"Nenhum outro fornecedor conhece [aspecto único — cartilha, DNA cultural] por dentro. A MentorEX [co-criou / co-desenvolveu]. Este módulo não adapta um conteúdo genérico — ele parte do que a própria [empresa] validou como seu jeito de liderar."<br><br><strong>Exige:</strong> Registro histórico da customização realizada. Se ainda não há customização profunda, use o fato de ter realizado o diagnóstico e entender o contexto de dentro.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Fato 2 — O histórico com a empresa fala por si</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>"NPS [X] no programa anterior. [N] profissionais promovidos durante a jornada. Resultados documentados em [competências específicas]."<br><br><strong>Exige:</strong> Coleta sistemática de NPS ao encerramento de cada programa. Hábito que começa agora.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Fato 3 — O problema específico que só a MentorEX resolve</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>"[Público-alvo] são [o ponto mais frágil / o mais subestimado] do pipeline de liderança. São os que [mais saem / mais custam para repor] no momento certo. Este módulo corrige isso antes que o problema apareça."<br><br><strong>Estratégia:</strong> Adapte para a tensão específica do cliente — o que ele mais teme se não contratar.</p></div></div></div>
+  </div>
+  <h2>Política de Precificação e Desconto</h2>
+  <div class="two-col">
+    <div class="col-card"><h4>Modelo</h4><ul><li>Tabela de valor/hora por tipo de solução</li><li>Ticket médio histórico: ~R$108k (2024)</li><li>Nunca fechar abaixo do custo de entrega + margem de 40%</li></ul></div>
+    <div class="col-card"><h4>Desconto</h4><ul><li>Caso a caso — nunca prática padrão</li><li>Prefira redução de escopo a desconto de preço</li><li>Nunca conceder sem contrapartida</li><li>Pressão excessiva = sinal de desalinhamento</li></ul></div>
+  </div>
+</div>
+<!-- OBJEÇÕES -->
+<div class="page" id="page-objecoes">
+  <h1>Gestão de Objeções</h1>
+  <p class="page-intro">As objeções mais frequentes com respostas fundamentadas e próximos passos.</p>
+  <div class="info-box"><p>Objeção = interesse disfarçado de dúvida. O cliente que não tem objeção também não tem intenção de comprar.</p></div>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>A diretoria mudou a estratégia e postergou o projeto</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Por trás:</strong> Mudança interna de prioridade ou falta de engajamento da diretoria.<br><br><strong>Resposta:</strong> "Entendo completamente. Posso te enviar um resumo executivo para facilitar a apresentação interna? Assim, quando o tema voltar à pauta, você já tem a argumentação pronta."<br><br><strong>Próximo passo:</strong> Lead como "aquecido – retomada em [mês]". Follow-up 2 semanas antes da data mencionada.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Trocamos o gestor de RH — o novo precisa conhecer a MentorEX</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Por trás:</strong> Campeão interno saiu. Novo gestor precisa ser reconquistado.<br><br><strong>Resposta:</strong> "Faz todo sentido. Você consegue nos conectar? Uma conversa de 30 minutos é suficiente para apresentar o histórico."<br><br><strong>Próximo passo:</strong> Pedir introdução formal. Levar briefing do histórico com a empresa.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Não temos orçamento para isso agora</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Por trás:</strong> Falta de orçamento real, ou problema ainda não priorizado o suficiente para liberar verba.<br><br><strong>Resposta:</strong> "Quando vocês costumam definir o orçamento? Posso ajudar a estruturar o case de valor internamente."<br><br><strong>Alternativa:</strong> "Se o budget for menor, posso começar com um módulo piloto para validar o método antes do programa completo."</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Preciso apresentar para a diretoria e aguardar aprovação</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Por trás:</strong> Você ainda não chegou ao decisor final.<br><br><strong>Resposta:</strong> "Posso te ajudar a preparar essa apresentação? Ou, se fizer sentido, posso participar da reunião com a diretoria junto com você — assim respondo dúvidas técnicas na hora."</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Já trabalhamos com outro fornecedor / queremos variar a abordagem</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Por trás:</strong> Churn por desejo de renovação — não necessariamente insatisfação.<br><br><strong>Resposta:</strong> "Variedade é importante para manter os gestores engajados. Depois de trabalhar com outros métodos, as empresas geralmente voltam para a MentorEX quando precisam de um programa mais estruturado e de longo prazo."<br><br><strong>Diferenciais:</strong> Método LTP próprio · Abordagem bottom-up · Integração cultura + desempenho.</p></div></div></div>
+  </div>
+  <h2>Motivos de Perda e Ações</h2>
+  <table class="kb-table">
+    <thead><tr><th>Motivo</th><th>Frequência</th><th>O que fazer diferente</th></tr></thead>
+    <tbody>
+      <tr><td>Indecisão / processo interno travado</td><td><span class="badge badge-red">Alta</span></td><td>Identificar decisor final antes de enviar proposta. Ajudar campeão a montar o case.</td></tr>
+      <tr><td>Mudança de estratégia da diretoria</td><td><span class="badge badge-orange">Média</span></td><td>Mapear nível de prioridade no diagnóstico. Leads sem patrocínio da diretoria = alto risco.</td></tr>
+      <tr><td>Troca de gestor de RH</td><td><span class="badge badge-orange">Média</span></td><td>Manter relacionamento com mais de um contato. Registrar histórico no CRM para retomada rápida.</td></tr>
+      <tr><td>Desejo de variar fornecedor</td><td><span class="badge badge-blue">Baixa</span></td><td>Manter contato após saída. Retomada no próximo ciclo de planejamento.</td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- KPIS -->
+<div class="page" id="page-kpis">
+  <h1>Indicadores & KPIs</h1>
+  <p class="page-intro">Métricas com fórmulas, benchmarks e frequência de acompanhamento.</p>
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-warn"><div class="kpi-label">Taxa de Conversão Atual</div><div class="kpi-value warn">8%</div><div class="kpi-sub">Meta: 20%+ · Bench consultoria: 40–60%</div></div>
+    <div class="kpi-card kpi-ok"><div class="kpi-label">Taxa de Recompra</div><div class="kpi-value ok">65%</div><div class="kpi-sub">Forte · Manter acima de 60%</div></div>
+    <div class="kpi-card"><div class="kpi-label">Ciclo Médio de Vendas</div><div class="kpi-value">4 meses</div><div class="kpi-sub">Range: 3 dias – 6 meses</div></div>
+    <div class="kpi-card kpi-info"><div class="kpi-label">Ticket Médio</div><div class="kpi-value info">R$108k</div><div class="kpi-sub">Referência 2024</div></div>
+    <div class="kpi-card kpi-warn"><div class="kpi-label">Leads / Semana (atual)</div><div class="kpi-value warn">~20</div><div class="kpi-sub">Meta (escala 3×): 37–38</div></div>
+    <div class="kpi-card kpi-ok"><div class="kpi-label">Capacity (trilhas simultâneas)</div><div class="kpi-value ok">17</div><div class="kpi-sub">Teórico · Real com buffer: ~12–14</div></div>
+  </div>
+  <h2>Fórmulas</h2>
+  <div class="formula-box"><div class="formula-label">Taxa de Conversão</div><div class="formula">Taxa = (Contratos Fechados ÷ Total de Leads) × 100
+Ex: 7 ÷ 86 = 8,1%</div></div>
+  <div class="formula-box"><div class="formula-label">Leads Necessários para Meta</div><div class="formula">Leads/mês = Meta de Fechamentos ÷ Taxa de Conversão
+Ex com 20%: 12 ÷ 0,20 = 60 leads/mês</div><div class="formula-result">Dobrar a taxa de conversão reduz o esforço de prospecção em 60%</div></div>
+  <h2>Benchmarks de Mercado</h2>
+  <div class="three-col">
+    <div class="col-card"><h4>Consultoria B2B</h4><p style="font-size:20px;font-weight:700;color:var(--accent);margin-bottom:4px">40–60%</p><p>Taxa de conversão benchmark para consultorias</p></div>
+    <div class="col-card"><h4>Outbound B2B</h4><p style="font-size:20px;font-weight:700;color:var(--blue);margin-bottom:4px">15–20%</p><p>Prospecção outbound (ciclo mais longo)</p></div>
+    <div class="col-card"><h4>Inbound B2B</h4><p style="font-size:20px;font-weight:700;color:var(--green);margin-bottom:4px">50–70%</p><p>Leads inbound qualificados</p></div>
+  </div>
+  <table class="kb-table">
+    <thead><tr><th>Métrica</th><th>Definição</th><th>Frequência</th><th>Meta</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Novos leads/semana</strong></td><td>Leads únicos novos no funil</td><td>Semanal</td><td>37–38 (escala 3×)</td></tr>
+      <tr><td><strong>Atividades/semana</strong></td><td>Total de toques em leads ativos</td><td>Semanal</td><td>Acompanhar tendência</td></tr>
+      <tr><td><strong>Reuniões/mês</strong></td><td>Diagnósticos efetivos realizados</td><td>Mensal</td><td>Proporcional ao capacity</td></tr>
+      <tr><td><strong>Propostas/mês</strong></td><td>Propostas formalizadas e apresentadas</td><td>Mensal</td><td>Proporcional às reuniões</td></tr>
+      <tr><td><strong>Contratos/mês</strong></td><td>Novos contratos assinados</td><td>Mensal</td><td>Conforme capacity disponível</td></tr>
+      <tr><td><strong>Receita de recompra</strong></td><td>Receita de clientes existentes</td><td>Mensal</td><td>Manter &gt;50% da receita total</td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- RITUAIS -->
+<div class="page" id="page-rituais">
+  <h1>Rituais da Área Comercial</h1>
+  <p class="page-intro">Cadência de reuniões e rotinas que mantêm o pipeline vivo e previsível.</p>
+  <div class="ritual-grid">
+    <div class="ritual-card"><div class="ritual-header"><div><div class="ritual-name">Check-in de Performance</div><div class="ritual-freq">Semanal · 30 min</div></div></div><ul><li>Acompanhamento de resultados da semana anterior (KPIs)</li><li>Comparativo com a semana antecedente (WoW)</li><li>Leads que precisam de ação urgente</li><li>Novas oportunidades identificadas</li></ul></div>
+    <div class="ritual-card"><div class="ritual-header"><div><div class="ritual-name">Pipeline Review</div><div class="ritual-freq">Semanal · 45 min</div></div></div><ul><li>Oportunidades ativas no CRM</li><li>Leads parados +10 dias → ação ou perda</li><li>Análise de conversão entre estágios</li><li>Bloqueios ou pedidos de apoio</li><li>Priorização dos próximos dias</li></ul></div>
+    <div class="ritual-card"><div class="ritual-header"><div><div class="ritual-name">Forecast</div><div class="ritual-freq">Mensal · 1h</div></div></div><ul><li>Projeção de fechamentos do próximo mês</li><li>Receita recorrente vs. nova</li><li>Comparação com capacity operacional</li><li>Ajuste de metas se necessário</li><li>Registro de aprendizados do mês</li></ul></div>
+    <div class="ritual-card"><div class="ritual-header"><div><div class="ritual-name">Retomada de Lost</div><div class="ritual-freq">Mensal · Projeto dedicado</div></div></div><ul><li>Listar leads sem interação +30 dias</li><li>Selecionar os 10 com maior potencial</li><li>Mensagem personalizada de retomada</li><li>Registrar resposta no CRM</li><li>Referência: 6/10 responderam na rodada recente</li></ul></div>
+  </div>
+  <h2>Cadência Semanal</h2>
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Segunda</div><div class="timeline-content">Check-in de Performance + planejamento de prospeção da semana + revisão de follow-ups</div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Terça e Quarta</div><div class="timeline-content">Blocos de 2h sem interrupção para prospecção ativa (LinkedIn, indicações) e agendamento de reuniões.</div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Quinta</div><div class="timeline-content">Reuniões de diagnóstico e apresentações de proposta. Follow-ups de oportunidades em negociação.</div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Sexta</div><div class="timeline-content">Atualização do CRM (tudo antes de fechar o dia). Análise dos resultados. Preparação de propostas para a semana seguinte.</div></div>
+  </div>
+</div>
+<!-- ROTINA -->
+<div class="page" id="page-rotina">
+  <h1>Rotina do Executivo Comercial</h1>
+  <p class="page-intro">Estrutura do dia a dia do PG para maximizar foco e resultado.</p>
+  <div class="info-box"><p>PG dedicado exclusivamente ao topo do funil. Bruno centraliza materiais e documentos. Andrea foca na entrega. Essa divisão precisa ser respeitada para o processo ganhar escala.</p></div>
+  <h2>Blocos de Tempo Semanais</h2>
+  <table class="kb-table">
+    <thead><tr><th>Bloco</th><th>Atividade</th><th>Horas/semana</th><th>Quando</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Prospecção Ativa</strong></td><td>LinkedIn outbound, pesquisa de leads, mensagens personalizadas</td><td>6–8h</td><td>Terça e quarta manhã</td></tr>
+      <tr><td><strong>Follow-up & Cadência</strong></td><td>Toques em leads ativos no pipeline</td><td>4–5h</td><td>Diário, blocos de 1h</td></tr>
+      <tr><td><strong>Reuniões</strong></td><td>Diagnósticos e apresentações de proposta</td><td>4–6h</td><td>Quintas preferencialmente</td></tr>
+      <tr><td><strong>CRM & Registro</strong></td><td>Atualização de status, atividades, próximas ações</td><td>2–3h</td><td>Sextas + após cada interação</td></tr>
+      <tr><td><strong>Desenvolvimento</strong></td><td>Leitura, alinhamento com metodologia</td><td>1–2h</td><td>Segundas manhã</td></tr>
+    </tbody>
+  </table>
+  <h2>Regras de Ouro</h2>
+  <div class="checklist">
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Tudo no CRM antes de fechar o dia</strong> — nenhuma interação fora do sistema. Lead que não está no CRM não existe.</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Toda reunião termina com próximo passo definido</strong> — data, responsável e ação. Reunião sem próximo passo é reunião perdida.</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Proposta nunca enviada sem reunião de apresentação agendada</strong> — marque a reunião antes de enviar o PDF.</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Leads sem atividade +10 dias recebem toque</strong> — pipeline parado não é pipeline, é cemitério.</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Identificar o decisor final antes de investir na proposta</strong> — conversa só com RH sem acesso à diretoria = risco alto.</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Não automatize o que você ainda não sabe que funciona</strong> — valide na mão primeiro, depois escala.</div></div>
+  </div>
+</div>
+<!-- CRM USO -->
+<div class="page" id="page-crm-uso">
+  <h1>CRM & Cadências</h1>
+  <p class="page-intro">Como usar o CRM de forma efetiva, campos obrigatórios, estrutura de cadências por etapa e indicadores.</p>
+  <div class="info-box"><p>Para a recomendação de migração para HubSpot gratuito e os motivos, veja <strong>Consultoria Fost → CRM</strong> na sidebar.</p></div>
+  <h2>Campos Obrigatórios por Lead</h2>
+  <table class="kb-table">
+    <thead><tr><th>Campo</th><th>O que registrar</th><th>Obrigatório?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Nome do contato</strong></td><td>Nome completo + cargo</td><td><span class="badge badge-red">Sim</span></td></tr>
+      <tr><td><strong>Empresa</strong></td><td>Razão social + setor + porte estimado</td><td><span class="badge badge-red">Sim</span></td></tr>
+      <tr><td><strong>Origem do lead</strong></td><td>Site / Parceiro / Contato Andrea / Bruno / PG / Prospecção ativa / Evento…</td><td><span class="badge badge-red">Sim</span></td></tr>
+      <tr><td><strong>Canal</strong></td><td>Inbound / Outbound</td><td><span class="badge badge-red">Sim</span></td></tr>
+      <tr><td><strong>Estágio do funil</strong></td><td>Atualizado após cada interação</td><td><span class="badge badge-red">Sim</span></td></tr>
+      <tr><td><strong>Próxima ação</strong></td><td>O que fazer + data limite</td><td><span class="badge badge-red">Sim</span></td></tr>
+      <tr><td><strong>Decisor identificado</strong></td><td>Nome, cargo e nível de influência</td><td><span class="badge badge-orange">Prioritário</span></td></tr>
+      <tr><td><strong>Dor principal</strong></td><td>Resumo da dor mapeada no diagnóstico</td><td><span class="badge badge-orange">Prioritário</span></td></tr>
+      <tr><td><strong>Histórico de atividades</strong></td><td>Todos os toques com data, canal e resumo</td><td><span class="badge badge-red">Sim</span></td></tr>
+    </tbody>
+  </table>
+  <div class="yellow-box"><p><strong>Lead vs. Atividade:</strong> Leads são entidades únicas. Atividades são os toques naquele lead. Monitore os dois separadamente — lead que não moveu de estágio não significa falta de trabalho.</p></div>
+
+  <h2>Cadência por Etapa do Pipeline</h2>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Etapa 1 — Prospect (8 pontos de contato em 3 semanas)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <div class="build-steps">
+        <div class="build-step"><div class="step-num">D+0</div><div class="step-content"><h4>LinkedIn — Conexão</h4><p>Convite de conexão com mensagem curta e personalizada.</p></div></div>
+        <div class="build-step"><div class="step-num">D+2</div><div class="step-content"><h4>LinkedIn — Mensagem de valor</h4><p>Conteúdo ou insight relevante para o segmento do prospect.</p></div></div>
+        <div class="build-step"><div class="step-num">D+4</div><div class="step-content"><h4>LinkedIn — Aprofunda a dor</h4><p>Pergunta consultiva que abre espaço para a dor.</p></div></div>
+        <div class="build-step"><div class="step-num">D+7</div><div class="step-content"><h4>LinkedIn — Case de referência</h4><p>Resultado de cliente parecido com o prospect.</p></div></div>
+        <div class="build-step"><div class="step-num">D+9</div><div class="step-content"><h4>Conteúdo diferenciado</h4><p>Vídeo, artigo ou dado de mercado relevante.</p></div></div>
+        <div class="build-step"><div class="step-num">D+11</div><div class="step-content"><h4>Pergunta sobre o momento</h4><p>Pergunta direta sobre o momento atual da empresa/pessoa.</p></div></div>
+        <div class="build-step"><div class="step-num">D+14</div><div class="step-content"><h4>Proposta de reunião com âncora</h4><p>Mensagem mais direta propondo a reunião com âncora de data.</p></div></div>
+        <div class="build-step"><div class="step-num">D+18</div><div class="step-content"><h4>Último toque — Breakup message</h4><p>Encerramento elegante deixando a porta aberta.</p></div></div>
+      </div>
+    </div></div></div>
+
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Etapa 2 — Qualificado (confirmação da reunião)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>D+0:</strong> Confirmação da reunião (D-1 antes da reunião). Se não confirmou: lembrete no dia da reunião.</p>
+    </div></div></div>
+
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Etapa 3 — Reunião Realizada (agendar proposta)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>D+0:</strong> Mensagem âncora com data e hora sugerida para apresentação da proposta.<br>
+      <strong>D+3:</strong> Se não respondeu, segundo toque.<br>
+      <strong>D+7:</strong> Último toque.</p>
+    </div></div></div>
+
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Etapa 4 — Proposta Apresentada (5 toques em 21 dias)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>D+1:</strong> E-mail/WhatsApp resumindo os pontos principais da proposta.<br>
+      <strong>D+3:</strong> Toque leve perguntando se surgiu alguma dúvida.<br>
+      <strong>D+7:</strong> Mensagem de urgência (ex: janela de onboarding disponível).<br>
+      <strong>D+14:</strong> Proposta de ajuste ou nova conversa.<br>
+      <strong>D+21:</strong> Último toque antes de mover para perdido.</p>
+    </div></div></div>
+
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Etapa 5 — Negociação (fechar em até 7 dias)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>D+1:</strong> Envio do contrato com prazo claro de assinatura.<br>
+      <strong>D+3:</strong> Confirmação se recebeu e se tem dúvidas.<br>
+      <strong>D+7:</strong> Último toque antes de escalar ou mover para perdido.</p>
+    </div></div></div>
+  </div>
+
+  <div class="highlight-box"><p><strong>Regras gerais de cadência:</strong> (1) Nunca fazer dois toques no mesmo canal seguidos — alterna WhatsApp, e-mail, LinkedIn. (2) Cada mensagem precisa trazer algo novo — nunca só "oi, tudo bem?". (3) Sempre terminar com pergunta ou âncora clara. (4) Registrar cada toque como atividade no CRM, sem mudar a etapa do card.</p></div>
+
+  <h2>Cadência Outbound Detalhada — Touchpoints</h2>
+  <table class="kb-table">
+    <thead><tr><th>Dia</th><th>Canal</th><th>Ação</th><th>Objetivo</th></tr></thead>
+    <tbody>
+      <tr><td>Dia 1</td><td>LinkedIn</td><td>Convite de conexão personalizado</td><td>Conectar</td></tr>
+      <tr><td>Dia 3</td><td>LinkedIn</td><td>Mensagem de abertura — gera curiosidade, não vende</td><td>Resposta inicial</td></tr>
+      <tr><td>Dia 6</td><td>LinkedIn</td><td>Conteúdo de valor relevante para o setor</td><td>Engajamento</td></tr>
+      <tr><td>Dia 9</td><td>LinkedIn / Email</td><td>Pergunta direta sobre a dor (curta, específica)</td><td>Conversa</td></tr>
+      <tr><td>Dia 13</td><td>LinkedIn</td><td>Caso de referência similar à empresa deles</td><td>Credibilidade</td></tr>
+      <tr><td>Dia 17</td><td>Email / WhatsApp</td><td>Proposta de reunião rápida (20 min)</td><td>Agendamento</td></tr>
+      <tr><td>Dia 21</td><td>LinkedIn</td><td>Último toque — "deixa aberta a porta"</td><td>Relacionamento futuro</td></tr>
+    </tbody>
+  </table>
+</div>
+<!-- SCRIPTS -->
+<div class="page" id="page-scripts">
+  <h1>Scripts de Abordagem</h1>
+  <p class="page-intro">Templates para cada etapa. Use como base — sempre personalize com contexto real.</p>
+  <div class="warning-box"><p><strong>Regra:</strong> Nunca envie um script copiado. Substitua sempre os campos em [colchetes]. Mensagem personalizada converte 3–5× mais que genérica.</p></div>
+  <h2>Abordagem LinkedIn — Outbound</h2>
+  <div class="script-box"><div class="script-label">Convite de Conexão (até 300 caracteres)</div><p>"Olá [Nome], sou [seu nome] da MentorEX Academy. Acompanho o crescimento da [Empresa] e acredito que temos sinergia na pauta de desenvolvimento de liderança. Seria ótimo conectar!"</p></div>
+  <div class="script-box"><div class="script-label">Primeira Mensagem Pós-Conexão</div><p>"Olá [Nome], obrigado por conectar! Vi que a [Empresa] está [crescendo / passando por uma transformação]. Tenho trabalhado com empresas do setor de [segmento] no desenvolvimento de lideranças para sustentar exatamente esse tipo de jornada. Posso te contar brevemente o que temos feito?"</p></div>
+  <div class="script-box"><div class="script-label">Mensagem com Caso de Referência</div><p>"[Nome], trabalhamos com a [empresa similar] que enfrentava [dor similar]. Achei relevante compartilhar porque vi pontos em comum com o que vocês vivem na [Empresa]. Faria sentido conversar 20 minutos?"</p></div>
+  <h2>Agendamento de Diagnóstico</h2>
+  <div class="script-box"><div class="script-label">Proposta de Reunião</div><p>"[Nome], tenho acompanhado o que a [Empresa] está construindo e acredito que posso trazer algo relevante na pauta de desenvolvimento de liderança. Que tal 20 minutos esta semana para eu entender melhor o momento de vocês? Pode ser [dia] às [horário]?"</p></div>
+  <h2>Follow-up Pós-Reunião (até 24h)</h2>
+  <div class="script-box"><div class="script-label">Envio em até 24h após o diagnóstico</div><p>"[Nome], foi um prazer conversar hoje. Ficou muito claro que [resumo da dor] é um ponto crítico para vocês — especialmente considerando [contexto específico mencionado]. Vou personalizar uma proposta com base no que discutimos. Envio até [prazo] e já agendo nossa apresentação para [data]. Se surgir alguma dúvida até lá, pode me chamar."</p></div>
+  <h2>Follow-up Pós-Proposta</h2>
+  <div class="script-box"><div class="script-label">48h sem resposta</div><p>"[Nome], queria checar se ficou alguma dúvida sobre a proposta ou se há algo que precisamos ajustar para facilitar a decisão internamente. Como estão os próximos passos aí?"</p></div>
+  <div class="script-box"><div class="script-label">10 dias sem resposta — novo ângulo</div><p>"[Nome], enquanto aguardava seu retorno, lembrei de um ponto da nossa conversa sobre [algo específico]. Encontrei um caso que pode ajudar na argumentação interna — posso compartilhar? E aproveito para checar se houve alguma atualização de prazo."</p></div>
+  <h2>Pedindo Indicação</h2>
+  <div class="script-box"><div class="script-label">Para cliente atual</div><p>"[Nome], estou muito feliz com o progresso da [Empresa] no programa. Uma coisa que me ajudaria muito: você conhece outros líderes de RH ou executivos que estejam passando por desafios similares de desenvolvimento de liderança? Um contato apresentado por você converte muito melhor para todo mundo."</p></div>
+</div>
+<!-- RECOMPRA -->
+<div class="page" id="page-recompra">
+  <h1>Recompra & Expansão</h1>
+  <p class="page-intro">Com 65% de taxa de recompra, este é o ativo mais valioso do negócio — CAC próximo de zero.</p>
+  <div class="highlight-box"><p><strong>Dado estratégico:</strong> 65% da base histórica tem recompra. Cada cliente bem atendido vale muito além do primeiro contrato.</p></div>
+  <h2>Gatilhos de Recompra</h2>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Conclusão da trilha atual</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>Na penúltima sessão, plante a semente. "O que vem depois para manter esse desenvolvimento?" Chegue ao encerramento com uma proposta nova já em construção.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Expansão interna (mais turmas/grupos)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>Mapeie quais outros grupos de líderes ainda não passaram pelo programa. Ofereça expansão antes que o cliente pense nisso sozinho. Referência: BBM chegou a 8 turmas simultâneas.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Mudança organizacional do cliente</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>Reestruturação, fusão, expansão, nova liderança = gatilho natural. Monitore notícias e LinkedIn dos clientes ativos.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Check-in proativo (contato semestral)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p>Clientes que terminaram o programa há 3–6 meses recebem check-in: "Como estão os resultados? O que mudou desde o programa?" Reativa o relacionamento e abre espaço para nova conversa.</p></div></div></div>
+  </div>
+  <h2>Expansão por Upsell</h2>
+  <div class="three-col">
+    <div class="col-card"><h4>Trilha Complementar</h4><p>Cliente que fez trilha de gestão → oferecer comunicação ou cultura. Ampliar repertório da mesma turma.</p></div>
+    <div class="col-card"><h4>Mentoria Individual</h4><p>Após a trilha, oferecer mentoria 1:1 para líderes que demonstraram maior potencial.</p></div>
+    <div class="col-card"><h4>Curadoria Contínua</h4><p>Engajamento como parceiro de Educação Corporativa — planejamento anual, não projeto pontual.</p></div>
+  </div>
+</div>
+<!-- ONBOARDING -->
+<div class="page" id="page-onboarding">
+  <h1>Onboarding do Executivo Comercial</h1>
+  <p class="page-intro">Programa dos primeiros 30/60/90 dias para quem assume o papel de executivo de vendas.</p>
+  <div class="onb-weeks">
+    <div class="onb-week"><div class="onb-week-label">Semana 1–2</div><div class="onb-week-title">Imersão & Contexto</div><ul><li>Ler este Playbook completo</li><li>Acessar e navegar no CRM</li><li>Revisar histórico dos últimos 20 leads</li><li>Participar de uma sessão de delivery</li><li>Reunião de alinhamento com cada sócio</li></ul></div>
+    <div class="onb-week"><div class="onb-week-label">Semana 3–4</div><div class="onb-week-title">Primeiros Contatos</div><ul><li>Primeiros 10 contatos supervisionados</li><li>Participar de diagnóstico como observador</li><li>Escrever primeiro script personalizado</li><li>Mapear 20 leads prioritários do mês</li></ul></div>
+    <div class="onb-week"><div class="onb-week-label">Mês 2</div><div class="onb-week-title">Autonomia Assistida</div><ul><li>Conduzir diagnósticos com acompanhamento</li><li>Construir primeira proposta com supervisão</li><li>Estabelecer cadência semanal própria</li><li>Apresentar primeiro pipeline review</li></ul></div>
+  </div>
+  <div class="onb-weeks">
+    <div class="onb-week"><div class="onb-week-label">Mês 3</div><div class="onb-week-title">Operação Independente</div><ul><li>Pipeline gerenciado autonomamente</li><li>Primeiros fechamentos ou avanços</li><li>Relatório de aprendizados</li><li>Proposta de melhorias no processo</li></ul></div>
+    <div class="onb-week" style="border-top-color:var(--green)"><div class="onb-week-label" style="color:var(--green)">Marcos de Sucesso</div><div class="onb-week-title">O que esperamos</div><ul><li>30 dias: conhece o produto e o processo</li><li>60 dias: conduz reuniões com segurança</li><li>90 dias: pipeline ativo com 15+ leads</li></ul></div>
+    <div class="onb-week" style="border-top-color:var(--blue)"><div class="onb-week-label" style="color:var(--blue)">Leituras</div><div class="onb-week-title">Referências</div><ul><li>Challenger Sales (Matt Dixon)</li><li>SPIN Selling (Neil Rackham)</li><li>Materiais Traction fornecidos</li></ul></div>
+  </div>
+</div>
+<!-- PERFIL -->
+<div class="page" id="page-perfil">
+  <h1>Perfil & Competências</h1>
+  <p class="page-intro">O que define um bom executivo comercial para a MentorEX.</p>
+  <div class="two-col">
+    <div class="col-card"><h4>Competências Técnicas</h4><ul><li>Domínio do Método LTP e portfólio</li><li>Venda consultiva — ouve antes de apresentar</li><li>Condução de diagnóstico com SPIN Selling</li><li>Construção e apresentação de proposta de valor</li><li>Gestão de CRM e pipeline</li><li>Prospecção ativa via LinkedIn</li></ul></div>
+    <div class="col-card"><h4>Competências Comportamentais</h4><ul><li>Resiliência — ciclo longo exige tolerância à frustração</li><li>Disciplina — cadência sem depender de inspiração</li><li>Curiosidade — genuinamente interessado no negócio do cliente</li><li>Autoridade técnica — fala com credibilidade sobre liderança</li><li>Organização — nada fora do CRM</li></ul></div>
+  </div>
+  <h2>Perfil Atual vs. Ideal</h2>
+  <div class="comp-grid">
+    <div class="comp-card"><h4 style="color:var(--text-muted)">Perfil Atual</h4><ul><li>Sócios fundadores realizando vendas</li><li>Alta autoridade técnica e relacional</li><li>Baixa dedicação exclusiva ao comercial</li><li>Background forte em produto/entrega</li><li>Aprendendo o processo na prática</li></ul></div>
+    <div class="comp-card featured"><h4>Perfil Ideal (próxima contratação)</h4><ul><li>Executivo 100% dedicado ao comercial</li><li>Background em vendas B2B consultivas</li><li>Experiência com RH/T&D como público</li><li>Sênior o suficiente para relacionamento C-level</li><li>Disciplina com CRM e processo</li><li>Familiaridade com ciclos de 3–6 meses</li></ul></div>
+  </div>
+</div>
+<!-- CF: HOME (LANDING PAGE CONSULTORIA FOST) -->
+<div class="page" id="page-cf-home">
+  <h1>Consultoria Fost</h1>
+  <p class="page-intro">Recomendações e ferramentas desenvolvidas a partir das sessões de consultoria comercial — foco em aumentar a taxa de conversão e escalar o processo de vendas da MentorEX.</p>
+  <div class="yellow-box"><p><strong>Contexto:</strong> Conteúdo construído a partir de sessões do programa Fost com estudo de caso da proposta Frísia. Adapte valores, datas e contextos para cada cliente — o princípio estrutural permanece o mesmo.</p></div>
+  <h2>Módulos disponíveis</h2>
+  <div class="fost-nav-grid">
+    <div class="fost-nav-card" onclick="navigate('cf-proposta','Modelo de Proposta','Fost')">
+      <div class="nav-arrow">→</div>
+      <h4>Modelo de Proposta</h4>
+      <p>Estrutura e melhorias recomendadas para elevar a taxa de conversão das propostas — ROI, urgência, próximo passo explícito e os três fatos sem retórica.</p>
+    </div>
+    <div class="fost-nav-card" onclick="navigate('cf-icp','ICP','Fost')">
+      <span class="nav-arrow">→</span>
+      <h4>ICP</h4>
+      <p>Perfil de cliente ideal — análise do ICP atual e melhorias para operacionalizar a qualificação.</p>
+    </div>
+    <div class="fost-nav-card" onclick="navigate('cf-crm','CRM','Fost')">
+      <div class="nav-arrow">→</div>
+      <h4>CRM</h4>
+      <p>Por que migrar para o HubSpot Free, o que está incluso no plano gratuito e plano de migração semana a semana.</p>
+    </div>
+    <div class="fost-nav-card" onclick="navigate('cf-challenger','The Challenger Sales','Fost')">
+      <div class="nav-arrow">→</div>
+      <h4>Challenger Sales</h4>
+      <p>O framework que mais aumenta conversão em vendas consultivas B2B de alto valor — e como aplicar na prática da MentorEX.</p>
+    </div>
+    <div class="fost-nav-card" onclick="navigate('cf-capacity','Capacity &amp; Metas','Fost')">
+      <div class="nav-arrow">→</div>
+      <h4>Capacity &amp; Metas</h4>
+      <p>Como calcular o teto realista de crescimento, simulador de cenários e calculadora de ROI de turnover para propostas.</p>
+    </div>
+    <div class="fost-nav-card" onclick="navigate('cf-gtm','GTM Outbound','Fost')">
+      <div class="nav-arrow">→</div>
+      <h4>GTM Outbound</h4>
+      <p>Estratégia detalhada de Go-to-Market — 3 canais de prospecção com execução, sequência de toques e metas por canal.</p>
+    </div>
+  </div>
+</div>
+<!-- CF: PROPOSTA -->
+<div class="page" id="page-cf-proposta">
+  <h1>Modelo de Proposta</h1>
+  <p class="page-intro">Sugestões de melhoria da consultoria Fost para elevar a taxa de conversão das propostas MentorEX.</p>
+  <div class="yellow-box"><p><strong>Contexto:</strong> Melhorias desenvolvidas a partir das sessões do programa de vendas estruturadas. Textos e números devem ser adaptados para cada cliente (utilizada a proposta da Frísia como estudo de caso) — o princípio estrutural permanece o mesmo.</p></div>
+  <h2>1. ROI no Slide de Investimento</h2>
+  <p>Apresente o custo de <em>não fazer nada</em>. O cliente compara o investimento com o valor percebido — se não mostrar esse valor em números, ele vai comparar com zero e o preço sempre parecerá alto.</p>
+  <div class="roi-card">
+    <div class="roi-card-title">Calculadora de Custo de Turnover — Case Frísia</div>
+    <div class="roi-numbers">
+      <div class="roi-num"><div class="roi-val" style="color:var(--text-muted)">R$72k</div><div class="roi-lbl">Custo anual por trainee</div></div>
+      <div class="roi-num"><div class="roi-val" style="color:var(--red)">R$168k</div><div class="roi-lbl">Custo turnover de 2 trainees</div></div>
+      <div class="roi-num"><div class="roi-val" style="color:var(--green)">7×</div><div class="roi-lbl">ROI se evitar as saídas</div></div>
+    </div>
+  </div>
+  <div class="script-box"><div class="script-label">Texto para o slide — copie e adapte</div><p>"A [empresa] investiu em um processo seletivo criterioso para escolher [N] trainees. Cada um tem custo anual estimado de R$[X] em remuneração (base R$[Y]/mês), fora benefícios, PPR e horas de gestão dedicadas ao programa. Se [2] desses [N] saírem nos primeiros 12 meses — número conservador dado o benchmark nacional de turnover de trainees — o custo de reposição de cada um fica entre R$[X×0,5] e R$[X], totalizando R$[total] em perdas. O módulo custa R$[investimento]. Ele precisa evitar a saída de menos de 1 [público-alvo] para se pagar."</p></div>
+  <div class="info-box"><p><strong>Como adaptar para outros públicos:</strong> O mesmo raciocínio funciona para gestores de média gerência (custo de reposição ~150% do salário anual), líderes sênior (200%+). Use fontes: Robert Half, Melhor RH, benchmark do setor.</p></div>
+  <h2>2. Urgência Real na Página de Preço</h2>
+  <p>Urgência técnica, não comercial. A justificativa deve ser sobre a janela de desenvolvimento — não sobre desconto válido até sexta. Urgência falsa destrói confiança.</p>
+  <div class="script-box"><div class="script-label">Bloco de urgência — slide ou e-mail de follow-up</div><p>"[Público-alvo] formam seus padrões de comportamento e percepção da empresa nos primeiros [60/90] dias. Este módulo está desenhado para essa janela. Depois dela, você não estará desenvolvendo — estará corrigindo."</p></div>
+  <h2>3. Próximo Passo Explícito ao Final</h2>
+  <p>A proposta deve terminar com uma ação clara e sem ambiguidade. O cliente nunca deve sair de uma apresentação sem saber exatamente o que fazer para avançar.</p>
+  <div class="script-box"><div class="script-label">Slide final obrigatório</div><p>"Próximos passos:<br>1. Confirme sua decisão respondendo este e-mail ou pelo WhatsApp até [data].<br>2. A MentorEX inicia a curadoria e customização dos materiais.<br>3. Em [data do módulo], [público-alvo da empresa] vivem o Módulo '[Nome do Módulo]'.<br><br>Alguma dúvida antes de avançar? Estamos disponíveis para uma conversa rápida."</p></div>
+  <h2>4. Por que a MentorEX — Três Fatos sem Retórica</h2>
+  <p>Substitua bullets genéricos de "quem somos" por 3 fatos específicos, mensuráveis e conectados ao histórico com aquela empresa. Quanto mais específico, mais credível.</p>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Fato 1 — Conhecimento interno exclusivo da empresa</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Modelo:</strong> "Nenhum outro fornecedor conhece [aspecto único — cartilha, DNA cultural] por dentro. A MentorEX [co-criou / co-desenvolveu]. Este módulo não adapta um conteúdo genérico — ele parte do que a própria [empresa] validou."<br><br><strong>Exige:</strong> Registro histórico de customizações realizadas. Se ainda não há, use o fato de ter realizado o diagnóstico e entender o contexto de dentro.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Fato 2 — O histórico com a empresa fala por si</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Modelo:</strong> "NPS [X] no programa anterior. [N] profissionais promovidos durante a jornada. Resultados documentados em [competências específicas]."<br><br><strong>Exige:</strong> Coleta sistemática de NPS ao encerramento de cada programa. Hábito que começa agora.</p></div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Fato 3 — O problema específico que só a MentorEX resolve</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner"><p><strong>Modelo:</strong> "[Público-alvo] são [o ponto mais frágil] do pipeline de liderança. São os que [mais saem / mais custam para repor] no momento certo. Este módulo corrige isso antes que o problema apareça."<br><br><strong>Estratégia:</strong> Adapte para a tensão específica do cliente — o que ele mais teme que aconteça se não contratar.</p></div></div></div>
+  </div>
+</div>
+<!-- CF: CRM -->
+<div class="page" id="page-cf-crm">
+  <h1>CRM</h1>
+  <p class="page-intro">Por que migrar para o HubSpot gratuito, como estruturar o pipeline, campos, cadências e indicadores — tudo baseado no diagnóstico da Consultoria Fost.</p>
+  <div class="highlight-box"><p><strong>Recomendação Fost:</strong> Migrar para o HubSpot Free assim que o processo comercial estiver minimamente validado na mão. O CRM atual cumpriu seu papel de estruturar o funil — agora está se tornando um gargalo.</p></div>
+
+  <h2>Pipeline — 7 Etapas</h2>
+  <div class="funnel">
+    <div class="funnel-stage"><div class="funnel-num">1</div><div class="funnel-info"><div class="funnel-name">Prospect</div><div class="funnel-desc"><strong>Critério de entrada:</strong> Indicação de que a empresa tem potencial para ser cliente. <strong>Próxima ação:</strong> Contatar para validar ICP e interesse.</div></div><div class="funnel-meta"><div class="funnel-sla">Prazo: 3 dias</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">2</div><div class="funnel-info"><div class="funnel-name">Qualificado (SQL)</div><div class="funnel-desc"><strong>Critério:</strong> Contato retornado com ICP confirmado e dor validada. <strong>Próxima ação:</strong> Agendar reunião de briefing.</div></div><div class="funnel-meta"><div class="funnel-sla">Prazo: 2 dias</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">3</div><div class="funnel-info"><div class="funnel-name">Reunião Realizada</div><div class="funnel-desc"><strong>Critério:</strong> Reunião de briefing feita. <strong>Próxima ação:</strong> Apresentar proposta ao vivo.</div></div><div class="funnel-meta"><div class="funnel-sla">Prazo: 2 dias</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">4</div><div class="funnel-info"><div class="funnel-name">Proposta Apresentada</div><div class="funnel-desc"><strong>Critério:</strong> Proposta apresentada e ajustada às necessidades do briefing. <strong>Próxima ação:</strong> Enviar proposta por e-mail.</div></div><div class="funnel-meta"><div class="funnel-sla">Prazo: 1 dia</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage"><div class="funnel-num">5</div><div class="funnel-info"><div class="funnel-name">Negociação</div><div class="funnel-desc"><strong>Critério:</strong> Decisor engajado, objeções mapeadas com negociação ativa. <strong>Próxima ação:</strong> Enviar contrato ou propor ajuste na proposta.</div></div><div class="funnel-meta"><div class="funnel-sla">Prazo: 3 dias</div></div></div>
+    <div class="funnel-arrow">↓</div>
+    <div class="funnel-stage" style="border-left: 3px solid var(--green)"><div class="funnel-num" style="color:var(--green)">6</div><div class="funnel-info"><div class="funnel-name">Ganho</div><div class="funnel-desc"><strong>Critério:</strong> Contrato assinado / pagamento confirmado. <strong>Próxima ação:</strong> Onboarding.</div></div></div>
+    <div class="funnel-stage" style="border-left: 3px solid var(--red); margin-top: 5px"><div class="funnel-num" style="color:var(--red)">7</div><div class="funnel-info"><div class="funnel-name">Perdido</div><div class="funnel-desc"><strong>Critério:</strong> Proposta não aprovada / sem retorno. <strong>Próxima ação:</strong> Retomada de lost (abrir novo card de negócio).</div></div></div>
+  </div>
+  <div class="warning-box"><p><strong>Regra de ouro:</strong> Vai para Perdido a partir de qualquer etapa se não avançar dentro dos prazos estipulados.</p></div>
+
+  <h2>Campos do CRM — Personalizados (criar)</h2>
+  <table class="kb-table">
+    <thead><tr><th>Campo</th><th>Por que existe</th><th>Respostas</th><th>Associação</th><th>HubSpot</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Cargo</strong></td><td>Identificar, mapear e medir para fomentar melhores, melhorar performance e filtrar para priorização</td><td>Seleção: Diretor RH / Dono / CEO / Gerente RH…</td><td>Contato</td><td><span class="badge badge-orange">Existe nativo — criar com seletor</span></td></tr>
+      <tr><td><strong>Porte</strong></td><td>Identificar, mapear e medir porte das empresas atendidas</td><td>Micro (até R$360k) / Pequena / Média / Grande (acima de R$300M)</td><td>Empresa</td><td><span class="badge badge-red">Criar campo e respostas</span></td></tr>
+      <tr><td><strong>Data de Retomada</strong></td><td>Retomar contato com negócio perdido</td><td>Campo de data</td><td>Negócio</td><td><span class="badge badge-red">Criar campo e respostas</span></td></tr>
+      <tr><td><strong>Canal</strong></td><td>Identificar e medir canal de entrada</td><td>Inbound / Outbound</td><td>Negócio</td><td><span class="badge badge-red">Criar campo e respostas</span></td></tr>
+      <tr><td><strong>Origem</strong></td><td>Identificar e medir origem do lead</td><td>Site / Parceiro / Contato Andrea / Contato Bruno / Contato PG / Prospecção ativa / Evento…</td><td>Negócio</td><td><span class="badge badge-red">Criar campo e respostas</span></td></tr>
+      <tr><td><strong>Motivo de Perda</strong></td><td>Identificar, mapear e melhorar conversão</td><td>Preço / Budget / Timing / Concorrente / Não é o decisor / Sem retorno</td><td>Negócio</td><td><span class="badge badge-orange">Existe nativo — criar com seletor</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Campos do CRM — Padrão do Sistema (usar/ajustar)</h2>
+  <table class="kb-table">
+    <thead><tr><th>Campo</th><th>Por que existe</th><th>Associação</th><th>Observação</th></tr></thead>
+    <tbody>
+      <tr><td>Email / Nome / Sobrenome / Telefone</td><td>Identificação</td><td>Contato</td><td>—</td></tr>
+      <tr><td>Nome de domínio (site) / Nome da empresa</td><td>Identificação</td><td>Empresa</td><td>—</td></tr>
+      <tr><td>Número de funcionários</td><td>Entender e medir porte</td><td>Empresa</td><td>—</td></tr>
+      <tr><td>Receita anual</td><td>Entender e medir porte</td><td>Empresa</td><td>Ajustar moeda para R$</td></tr>
+      <tr><td>Setor</td><td>Entender setor das empresas</td><td>Empresa</td><td><span class="badge badge-orange">Usar campo nativo — criar respostas</span></td></tr>
+      <tr><td>Nome do negócio / Pipeline / Etapa do negócio</td><td>Identificação</td><td>Negócio</td><td>—</td></tr>
+      <tr><td>Valor</td><td>Receita potencial do negócio</td><td>Negócio</td><td>Ajustar moeda para R$</td></tr>
+      <tr><td>Data de fechamento</td><td>Forecast</td><td>Negócio</td><td>—</td></tr>
+      <tr><td>Proprietário do negócio</td><td>Vendedor responsável</td><td>Negócio</td><td>—</td></tr>
+      <tr><td>Prioridade</td><td>Priorização de atividades</td><td>Negócio</td><td><span class="badge badge-orange">Usar nativo — criar respostas: Baixa / Média / Alta</span></td></tr>
+      <tr><td>Tipo (tarefa)</td><td>Fila de atividades</td><td>Tarefa</td><td>Criar filas: FUP Lead / FUP proposta / FUP contrato…</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Indicadores — Must Have e Go to Have</h2>
+  <table class="kb-table">
+    <thead><tr><th>Indicador</th><th>O que acompanhar</th><th>Frequência</th><th>Prioridade</th></tr></thead>
+    <tbody>
+      <tr><td>Prospects</td><td>Crescimento (# e %)</td><td>Semanal</td><td><span class="badge badge-red">Must have</span></td></tr>
+      <tr><td>Taxa de avanço entre etapas</td><td>Gargalos de conversão</td><td>Semanal</td><td><span class="badge badge-red">Must have</span></td></tr>
+      <tr><td>Ganhos</td><td>Crescimento (# e %)</td><td>Semanal</td><td><span class="badge badge-red">Must have</span></td></tr>
+      <tr><td>Perdidos</td><td>Crescimento (# e %)</td><td>Semanal</td><td><span class="badge badge-red">Must have</span></td></tr>
+      <tr><td>Motivo de perda</td><td>Distribuição para melhorar conversão</td><td>Semanal</td><td><span class="badge badge-red">Must have</span></td></tr>
+      <tr><td>Ciclo de vendas</td><td>Crescimento (# e %)</td><td>Semanal</td><td><span class="badge badge-red">Must have</span></td></tr>
+      <tr><td>Leads por origem</td><td>Distribuição — fomentar maiores, melhorar menores</td><td>Semanal</td><td><span class="badge badge-orange">Go to have</span></td></tr>
+      <tr><td>Leads por canal</td><td>Distribuição — fomentar maiores, melhorar menores</td><td>Semanal</td><td><span class="badge badge-orange">Go to have</span></td></tr>
+      <tr><td>Leads por setor</td><td>Distribuição — fomentar maiores, melhorar menores</td><td>Semanal</td><td><span class="badge badge-orange">Go to have</span></td></tr>
+      <tr><td>Tempo médio em cada etapa</td><td>Gargalos de operação</td><td>Semanal</td><td><span class="badge badge-orange">Go to have</span></td></tr>
+      <tr><td>Qualificados / Reuniões / Propostas / Negociações</td><td>Crescimento (# e %)</td><td>Semanal</td><td><span class="badge badge-orange">Go to have</span></td></tr>
+      <tr><td>Convertidos por origem</td><td>Distribuição — fomentar maiores, melhorar menores</td><td>Semanal</td><td><span class="badge badge-orange">Go to have</span></td></tr>
+      <tr><td>Atividades realizadas</td><td>Crescimento (# e %)</td><td>Semanal</td><td><span class="badge badge-orange">Go to have</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Por que o HubSpot Gratuito</h2>
+  <div class="build-steps">
+    <div class="build-step"><div class="step-num">1</div><div class="step-content"><h4>Registro de atividades integrado ao contato</h4><p>Cada e-mail enviado pelo Gmail pode ser registrado automaticamente no contato do HubSpot. Elimina o problema atual de atividades registradas apenas em "notas" — o histórico fica visível e consultável por qualquer sócio.</p></div></div>
+    <div class="build-step"><div class="step-num">2</div><div class="step-content"><h4>Pipeline visual nativo com estágios customizáveis</h4><p>Permite criar o funil exato da MentorEX sem limitações. Arraste leads entre estágios, visualize o valor total em cada etapa e identifique gargalos em segundos. Diferente do CRM atual que tem estágios fixos.</p></div></div>
+    <div class="build-step"><div class="step-num">3</div><div class="step-content"><h4>Tarefas e lembretes automáticos</h4><p>Resolve o principal risco atual: leads caírem no esquecimento quando o PG está em semanas mais pesadas de entrega. Configure lembretes por estágio e prazo de follow-up.</p></div></div>
+    <div class="build-step"><div class="step-num">4</div><div class="step-content"><h4>Rastreamento de abertura de e-mails e cliques</h4><p>Saber que o decisor abriu a proposta 3 vezes em 24h é o gatilho perfeito para um follow-up cirúrgico. Incluso no plano gratuito (200 notificações/mês).</p></div></div>
+    <div class="build-step"><div class="step-num">5</div><div class="step-content"><h4>Relatórios básicos de conversão por estágio</h4><p>Exatamente o que a MentorEX precisa para medir onde os leads estão sendo perdidos e validar a melhoria da taxa de conversão ao longo das semanas.</p></div></div>
+    <div class="build-step"><div class="step-num">6</div><div class="step-content"><h4>Gratuito permanente — sem limite de tempo</h4><p>O Free do HubSpot não tem trial. É permanentemente gratuito para CRM, contatos, pipeline e relatórios básicos. Não há pressa em migrar para plano pago.</p></div></div>
+  </div>
+  <h2>O que o HubSpot Free Inclui</h2>
+  <table class="kb-table">
+    <thead><tr><th>Funcionalidade</th><th>Plano Free</th><th>Relevância para MentorEX</th></tr></thead>
+    <tbody>
+      <tr><td>Contatos e empresas</td><td><span class="badge badge-green">Até 1M</span></td><td>Mais que suficiente por anos</td></tr>
+      <tr><td>Pipeline de vendas visual</td><td><span class="badge badge-green">Incluído</span></td><td>Substitui diretamente o CRM atual</td></tr>
+      <tr><td>Tarefas e lembretes</td><td><span class="badge badge-green">Incluído</span></td><td>Resolve o problema de leads esquecidos</td></tr>
+      <tr><td>Integração com Gmail/Outlook</td><td><span class="badge badge-green">Incluído</span></td><td>Registro automático de e-mails enviados</td></tr>
+      <tr><td>Rastreamento de e-mails (aberturas)</td><td><span class="badge badge-green">200/mês</span></td><td>Saber quando a proposta foi aberta</td></tr>
+      <tr><td>Relatórios básicos de conversão</td><td><span class="badge badge-green">Incluído</span></td><td>Medir taxa de conversão por estágio</td></tr>
+      <tr><td>Sequências de e-mail automáticas</td><td><span class="badge badge-orange">Sales Pro (~R$250/mês)</span></td><td>Necessário quando escalar o outbound</td></tr>
+      <tr><td>Relatórios avançados</td><td><span class="badge badge-orange">Sales Pro</span></td><td>Quando o volume justificar</td></tr>
+      <tr><td>Usuários</td><td><span class="badge badge-red">2 users</span></td><td>Necessário upgrade quando tiver time</td></tr>
+    </tbody>
+  </table>
+  <h2>Plano de Migração</h2>
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Semana 1</div><div class="timeline-content">Criar conta HubSpot Free. Configurar pipeline com os 7 estágios da MentorEX. Importar leads do CRM atual via CSV. Conectar Gmail.</div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Semana 2</div><div class="timeline-content">Ajustar campos obrigatórios nas propriedades. Criar campos personalizados: Porte, Canal, Origem, Data de Retomada, Motivo de Perda (seletor).</div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Semana 3</div><div class="timeline-content">Testar registro automático de e-mails. Criar templates de e-mail para as etapas mais frequentes. Configurar filas de tarefa por tipo.</div></div>
+    <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-label">Semana 4</div><div class="timeline-content">Desativar CRM atual. HubSpot como único sistema de registro. Backup final do Replit em Excel e código salvo no GitHub.</div></div>
+  </div>
+  <div class="info-box"><p><strong>Recursos:</strong> HubSpot Academy (academy.hubspot.com) tem cursos gratuitos em português. A configuração inicial do pipeline leva menos de 2 horas.</p></div>
+</div>
+<!-- CF: ICP -->
+<div class="page" id="page-cf-icp">
+  <h1>ICP — Perfil de Cliente Ideal</h1>
+  <p class="page-intro">Análise do ICP atual da MentorEX, o que está bem estruturado e o que precisa ser operacionalizado para que o time qualifique leads com precisão.</p>
+
+  <h2>ICP Atual</h2>
+  <div class="two-col">
+    <div class="col-card">
+      <h4>Público-alvo definido</h4>
+      <p>Médias e grandes empresas que entendem que não atingirão seus objetivos sem uma liderança preparada para suportar os desafios de crescer e/ou mudar com direção, estratégia e identidade.</p>
+    </div>
+    <div class="col-card">
+      <h4>Priorização</h4>
+      <p>Empresas de médio e grande porte que querem potencializar a performance de seus líderes/times sem abrir mão de sua cultura.</p>
+    </div>
+  </div>
+
+  <h3>Posicionamento Estratégico</h3>
+  <div class="three-col">
+    <div class="col-card">
+      <h4>🧭 Resgate de Princípios Atemporais</h4>
+      <p>A bússola que norteia as posturas e os papéis de gestão e liderança.</p>
+    </div>
+    <div class="col-card">
+      <h4>⚡ Alavancagem de Atitudes Propositivas</h4>
+      <p>A escolha intencional de comportamentos assertivos e estratégicos.</p>
+    </div>
+    <div class="col-card">
+      <h4>🎯 Domínio de Repertório Prático</h4>
+      <p>O foco na aplicabilidade imediata de técnicas e ferramentas.</p>
+    </div>
+  </div>
+
+  <h3>A Dor que a MentorEX Resolve</h3>
+  <div class="formula-box">
+    <div class="formula-label">Dor Central</div>
+    <div class="formula">Lideranças despreparadas ou imaturas para lidar com os desafios da empresa afetam o desempenho, os relacionamentos, a cultura e os resultados. Esse é um erro crucial em um dos investimentos mais críticos do negócio.</div>
+    <div class="formula-result">O que fazemos: Soluções de T&D que capacitam líderes a exercer seu papel de forma consistente, prática e intencional — sem hacks e sem atalhos, mas com direção e estratégia.</div>
+  </div>
+
+  <h3>Anti-ICP — Para quem NÃO vender</h3>
+  <div class="warning-box"><p><strong>Não são clientes da MentorEX:</strong> Empresas que não enxerguem T&D como investimento — aquelas que pressionam por preços baixos e soluções genéricas, sem entender o valor estratégico do desenvolvimento de liderança.</p></div>
+
+  <h2>Diagnóstico Fost — O que está bom e o que está faltando</h2>
+  <div class="comp-grid">
+    <div class="comp-card featured">
+      <h4>✅ O que está bom</h4>
+      <ul>
+        <li>A dor central está clara e bem articulada</li>
+        <li>O anti-ICP (quem não compra) está definido</li>
+        <li>O posicionamento tem diferenciação real</li>
+      </ul>
+    </div>
+    <div class="comp-card">
+      <h4>⚠️ O que está faltando</h4>
+      <ul>
+        <li>Perfil de empresa com critérios objetivos</li>
+        <li>Perfil do decisor (persona de compra)</li>
+        <li>Gatilhos de timing</li>
+        <li>Sinais de desqualificação objetivos</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Melhorias — O que precisa ser construído</h2>
+
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>1. Perfil de Empresa — Critérios Objetivos</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p>"Médias e grandes empresas" é vago demais. Sem critérios objetivos, o vendedor não consegue qualificar. Precisa definir:</p>
+      <div class="checklist">
+        <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Faturamento mínimo / número de funcionários</strong> — ex: acima de R$4,8M ou 50+ funcionários</div></div>
+        <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Setores prioritários ou excluídos</strong> — ex: indústria, cooperativas, varejo, serviços B2B</div></div>
+        <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Maturidade organizacional mínima</strong> — ex: já tem área de RH estruturada? Já fez T&D antes?</div></div>
+      </div>
+    </div></div></div>
+
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>2. Perfil do Decisor — Persona de Compra</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p>Quem dentro da empresa toma a decisão? CHO, CEO, CHRO, Gerente de RH? Quem influencia? Sem isso, o time não sabe com quem falar nem como falar.</p>
+      <div class="three-col" style="margin-top:12px">
+        <div class="col-card"><h4>Decisor primário</h4><p>CEO / Dono da Empresa — foco: impacto financeiro e resultado de negócio</p></div>
+        <div class="col-card"><h4>Decisor técnico</h4><p>Diretor/Gerente de RH — foco: execução, metodologia, case interno</p></div>
+        <div class="col-card"><h4>Influenciador</h4><p>CFO / Diretores de área — foco: ROI, payback e evidências tangíveis</p></div>
+      </div>
+    </div></div></div>
+
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>3. Gatilhos de Timing — Quando a Empresa Está Pronta para Comprar</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p>O que faz uma empresa estar pronta para comprar agora? Isso define <strong>quando</strong> abordar, não só quem abordar.</p>
+      <ul>
+        <li>Aceleração de crescimento — empresa abrindo novas unidades ou contratando em ritmo acelerado</li>
+        <li>Mudança de liderança — novo C-level, novo gestor de RH</li>
+        <li>Expansão de operação — entrada em novo mercado ou segmento</li>
+        <li>Pós-fusão ou aquisição — necessidade de alinhar culturas e lideranças</li>
+        <li>Alta rotatividade — empresa pagando custo alto de turnover de líderes</li>
+        <li>Problemas de performance — resultado abaixo do esperado em times sob liderança</li>
+      </ul>
+    </div></div></div>
+
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>4. Sinais de Desqualificação Objetivos</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p>"Não enxerga T&D como investimento" é subjetivo. Quais comportamentos concretos indicam isso <strong>antes</strong> de gastar tempo com o lead?</p>
+      <div class="warning-box"><p><strong>Desqualifique se:</strong></p></div>
+      <ul>
+        <li>Sem orçamento definido para T&D — "a gente faz orçamento no próximo ano" sem prazo claro</li>
+        <li>Decisão centralizada só em preço — primeira pergunta é quanto custa, sem interesse na metodologia</li>
+        <li>Histórico de cancelar treinamentos — já contrataram e cancelaram por "falta de tempo" ou corte de budget</li>
+        <li>Não há área de RH estruturada — empresa sem responsável claro por desenvolvimento de pessoas</li>
+        <li>Sem decisor identificado após 2 reuniões — o contato não tem autonomia e não consegue viabilizar a decisão internamente</li>
+      </ul>
+    </div></div></div>
+  </div>
+
+  <h2>Próximos Passos para Completar o ICP</h2>
+  <div class="build-steps">
+    <div class="build-step"><div class="step-num">1</div><div class="step-content"><h4>Definir critérios objetivos de porte</h4><p>Faturamento mínimo, número de funcionários e maturidade de RH. Usar os campos de porte já definidos no CRM (Micro / Pequena / Média / Grande) como guia.</p></div></div>
+    <div class="build-step"><div class="step-num">2</div><div class="step-content"><h4>Mapear os decisores por tipo de empresa</h4><p>Definir quem é o decisor primário e quem influencia em cada porte — PME vs. grande empresa têm personas diferentes.</p></div></div>
+    <div class="build-step"><div class="step-num">3</div><div class="step-content"><h4>Criar checklist de qualificação</h4><p>5 a 7 perguntas objetivas para o vendedor usar na primeira conversa e decidir se vale avançar para reunião de briefing.</p></div></div>
+    <div class="build-step"><div class="step-num">4</div><div class="step-content"><h4>Validar com base histórica</h4><p>Analisar os últimos 20 clientes: quais tinham o perfil? Quais características repetem nos que mais geraram valor? Isso calibra o ICP com dados reais.</p></div></div>
+  </div>
+</div>
+<!-- CF: CHALLENGER SALES -->
+<div class="page" id="page-cf-challenger">
+  <h1>The Challenger Sales</h1>
+  <p class="page-intro">O framework que mais aumenta taxa de conversão em vendas consultivas B2B de alto valor — e por que é especialmente relevante para a MentorEX.</p>
+  <div class="info-box"><p><strong>Contexto:</strong> Pesquisa com 6.000 vendedores B2B identificou 5 perfis. O "Challenger" foi o que mais fechou negócios em ambientes de alto valor e ciclo longo — exatamente o cenário da MentorEX. Segundo o estudo, 53% das vendas B2B ocorrem devido à <em>experiência de venda</em>, não ao produto ou preço.</p></div>
+  <h2>Os 5 Perfis de Vendedor</h2>
+  <table class="kb-table">
+    <thead><tr><th>Perfil</th><th>Comportamento central</th><th>Performance em alto valor</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Trabalhador Esforçado</strong></td><td>Mais visitas, mais ligações, mais follow-ups</td><td><span class="badge badge-orange">Média</span></td></tr>
+      <tr><td><strong>Construtor de Relacionamento</strong></td><td>Foca em vínculos, evita conflito, serve o cliente</td><td><span class="badge badge-orange">Média-baixa</span></td></tr>
+      <tr><td><strong>Lobo Solitário</strong></td><td>Segue instintos próprios, ignora processos</td><td><span class="badge badge-orange">Alta, mas imprevisível</span></td></tr>
+      <tr><td><strong>Solucionador Reativo</strong></td><td>Responde bem às demandas, resolve problemas</td><td><span class="badge badge-orange">Média</span></td></tr>
+      <tr><td><strong>Challenger</strong></td><td>Educa, desafia, controla a conversa com confiança</td><td><span class="badge badge-green">A mais alta, consistentemente</span></td></tr>
+    </tbody>
+  </table>
+  <h2>As 3 Capacidades do Challenger</h2>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>1. Ensinar (Teach) — Traz um ponto de vista único que muda como o cliente pensa</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p>O Challenger não começa com o produto. Começa ensinando algo que o cliente não sabia sobre o próprio negócio. Cria uma "insight-led conversation".<br><br>
+      <strong>Aplicação para a MentorEX:</strong><br><br>
+      "Empresas que crescem mais de 20% ao ano têm 3× mais chances de ter problemas de liderança do que de vendas — e a maioria investe no lado errado."<br><br>
+      "O benchmark de custo de reposição de um gestor sênior no Brasil está em 150–200% do salário anual. Para a maioria das empresas, isso representa um risco maior do que qualquer problema de processo."<br><br>
+      "Programas de liderança top-down falham em 68% dos casos porque ignoram a percepção dos reportes diretos."</p>
+    </div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>2. Personalizar (Tailor) — Adapta a mensagem para ressoar com cada decisor</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p>O Challenger sabe que CEO e RH têm medos e ambições diferentes. A mesma proposta não funciona para os dois.<br><br>
+      <strong>Para o CEO:</strong> Impacto financeiro, velocidade de resultado, risco de não agir. "O problema de liderança que você tem hoje vai custar X nos próximos 12 meses se não for resolvido."<br><br>
+      <strong>Para o RH:</strong> Execução, metodologia, como apresentar internamente. "Vou te ajudar a montar o case para a diretoria aprovar."<br><br>
+      <strong>Para o CFO:</strong> ROI tangível. Usa a calculadora de custo de turnover da proposta.</p>
+    </div></div></div>
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>3. Assumir o Controle (Take Control) — Conduz a conversa com confiança, mesmo sob pressão</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p>O Challenger não cede ao primeiro sinal de resistência. É assertivo, não agressivo.<br><br>
+      <strong>Na prática:</strong><br><br>
+      Cliente pede desconto → "Entendo a pressão de orçamento. Mas reduzir o preço sem reduzir o escopo enfraquece o programa e o resultado que você precisa. Posso adaptar o escopo para caber no budget sem comprometer o que é essencial."<br><br>
+      Cliente quer mais tempo → "Quero respeitar o seu processo. Mas tenho que ser honesto: a janela de desenvolvimento do [público-alvo] está fechando. Se começarmos em [nova data], ainda conseguimos o resultado. Se esperarmos mais, estaremos corrigindo, não desenvolvendo."</p>
+    </div></div></div>
+  </div>
+  <h2>Como Aplicar na Apresentação de Proposta</h2>
+  <div class="build-steps">
+    <div class="build-step"><div class="step-num">1</div><div class="step-content"><h4>Comece com um insight comercial, não com "quem somos"</h4><p>Os primeiros 3 minutos definem o tom. Em vez de falar sobre a MentorEX, comece com um dado do mercado que explique por que o problema do cliente é mais urgente do que ele pensa.</p></div></div>
+    <div class="build-step"><div class="step-num">2</div><div class="step-content"><h4>Construa a tensão antes de apresentar a solução</h4><p>Mostre o custo de não agir (ROI slide), o timing (urgência) e as consequências para aquela empresa. Só depois apresente a solução — agora ela parece urgente e necessária.</p></div></div>
+    <div class="build-step"><div class="step-num">3</div><div class="step-content"><h4>Posicione a MentorEX como a única que entende o problema desse jeito</h4><p>Use os 3 fatos do slide "Por que a MentorEX". O objetivo não é comparar com concorrentes — é sair da conversa de comparação.</p></div></div>
+    <div class="build-step"><div class="step-num">4</div><div class="step-content"><h4>Feche com próximos passos e mantenha o controle</h4><p>Não termine com "pode me dar um retorno". Proponha a data de início, o próximo passo específico e a janela de resposta. Quem controla o próximo passo controla o ciclo.</p></div></div>
+  </div>
+  <div class="highlight-box"><p><strong>Por que funciona para a MentorEX:</strong> Os fundadores têm autoridade técnica genuína sobre liderança. Isso é o ativo mais raro e mais difícil de replicar pelo concorrente. O Challenger Sale usa exatamente isso — conhecimento profundo transformado em insights que o cliente não consegue ignorar.</p></div>
+</div>
+<!-- CF: CAPACITY -->
+<div class="page" id="page-cf-capacity">
+  <h1>Capacity & Metas</h1>
+  <p class="page-intro">Por que calcular o capacity antes de definir metas de vendas — e como usar a planilha de simulação.</p>
+  <div class="warning-box"><p><strong>Erro comum:</strong> Definir meta de vendas sem olhar para o capacity de entrega. O resultado é ou trabalho desperdiçado (vender mais do que consegue entregar) ou meta irreal (subestimar o potencial). O capacity é o ponto de partida.</p></div>
+  <h2>Por que o Capacity Importa</h2>
+  <p>O capacity define o <strong>teto realista de crescimento</strong> e guia onde investir: se há capacity ocioso, o problema é o topo de funil. Se o capacity está cheio, o problema é operacional — precisa contratar/escalar entrega antes de vender mais. Sem esse número, qualquer meta de vendas é chute.</p>
+  <h2>Capacity Atual — MentorEX</h2>
+  <div class="sim-grid">
+    <div class="sim-header">Parâmetro</div><div class="sim-header">Valor</div><div class="sim-header">Base de cálculo</div><div class="sim-header">Status</div>
+    <div class="sim-cell label">Horas brutas/mês (3 sócios)</div><div class="sim-cell">528h</div><div class="sim-cell">22 dias × 8h × 3 sócios</div><div class="sim-cell good">Base</div>
+    <div class="sim-cell label">% dedicada à entrega</div><div class="sim-cell">40%</div><div class="sim-cell">Restante: prep, comercial, gestão, buffer</div><div class="sim-cell">Calculado</div>
+    <div class="sim-cell label">Horas disponíveis para entrega</div><div class="sim-cell highlight">211h/mês</div><div class="sim-cell">528h × 40%</div><div class="sim-cell good">OK</div>
+    <div class="sim-cell label">Horas por cliente/mês (trilha)</div><div class="sim-cell">12h</div><div class="sim-cell">8h prep + 4h entrega mensal</div><div class="sim-cell">Referência</div>
+    <div class="sim-cell label">Trilhas simultâneas (teórico)</div><div class="sim-cell highlight">17</div><div class="sim-cell">211h ÷ 12h</div><div class="sim-cell good">Capacity disponível</div>
+    <div class="sim-cell label">Clientes ativos hoje</div><div class="sim-cell" style="color:var(--accent)">~10</div><div class="sim-cell">~60% do capacity usado</div><div class="sim-cell good">Há espaço</div>
+    <div class="sim-cell label">Receita potencial (todas trilhas)</div><div class="sim-cell highlight">R$306k/mês</div><div class="sim-cell">17 trilhas × R$18k</div><div class="sim-cell good">Meta acessível</div>
+    <div class="sim-cell label">Receita atual</div><div class="sim-cell" style="color:var(--red)">~R$8,8k/mês</div><div class="sim-cell">R$106k ÷ 12</div><div class="sim-cell" style="color:var(--accent)">Grande espaço de crescimento</div>
+  </div>
+  <h2>Simulador de Cenários</h2>
+  <div class="sim-grid">
+    <div class="sim-header">Métrica</div><div class="sim-header">Atual</div><div class="sim-header">Cenário 1: Melhorar Conversão</div><div class="sim-header">Cenário 2: Pré-vendedor + Automação</div>
+    <div class="sim-cell label">Receita alvo/mês</div><div class="sim-cell">R$8,8k</div><div class="sim-cell">R$26,5k (3×)</div><div class="sim-cell">R$35,3k (4×)</div>
+    <div class="sim-cell label">Taxa de conversão</div><div class="sim-cell" style="color:var(--red)">8%</div><div class="sim-cell" style="color:var(--accent)">20%</div><div class="sim-cell" style="color:var(--green)">20%</div>
+    <div class="sim-cell label">Leads/semana necessários</div><div class="sim-cell">20</div><div class="sim-cell highlight">38</div><div class="sim-cell highlight">80</div>
+    <div class="sim-cell label">Pré-vendedor dedicado?</div><div class="sim-cell" style="color:var(--red)">Não</div><div class="sim-cell" style="color:var(--red)">Não</div><div class="sim-cell" style="color:var(--green)">Sim</div>
+    <div class="sim-cell label">Viável com capacity atual?</div><div class="sim-cell good">Sim</div><div class="sim-cell good">Sim</div><div class="sim-cell good">Sim</div>
+  </div>
+  <h2>Calculadora de ROI de Turnover</h2>
+  <div class="roi-card">
+    <div class="roi-card-title">Dados da Planilha — Case Frísia (mai/2026)</div>
+    <div class="roi-numbers">
+      <div class="roi-num"><div class="roi-val" style="color:var(--text-muted)">R$84k</div><div class="roi-lbl">Custo anual por trainee (salário × 14)</div></div>
+      <div class="roi-num"><div class="roi-val" style="color:var(--red)">R$168k</div><div class="roi-lbl">Custo turnover de 2 trainees (100% salário)</div></div>
+      <div class="roi-num"><div class="roi-val" style="color:var(--green)">7× ROI</div><div class="roi-lbl">Payback: menos de 1 trainee retido</div></div>
+    </div>
+  </div>
+  <h2>Planilha Interativa</h2>
+  <p>A planilha completa permite simular seus próprios cenários, calcular o ROI de turnover para propostas e ajustar os parâmetros conforme o time cresce. As 3 abas são: (1) Capacity de Entrega, (2) Metas de Vendas, (3) Simulador de Cenários + Calculadora de ROI.</p>
+  <p>Edite apenas as células em azul — as demais são calculadas automaticamente.</p>
+  <a class="link-btn" href="MentorEX_Capacity_Metas.xlsx" download>↓ Baixar MentorEX_Capacity_Metas.xlsx</a>
+  <h2>Quando Revisar o Capacity</h2>
+  <div class="checklist">
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text">Ao contratar um novo mentor ou executivo de entrega</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text">Ao fechar contrato de revenda (uma empresa = múltiplas turmas)</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text">Ao mudar o mix de produtos (ex: mais workshops, menos trilhas)</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text">Ao definir metas do próximo trimestre</div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text">Ao avaliar se é viável fechar um contrato grande sem comprometer a entrega atual</div></div>
+  </div>
+</div>
+<!-- CF: GTM -->
+<div class="page" id="page-cf-gtm">
+  <h1>GTM Outbound</h1>
+  <p class="page-intro">Estratégia detalhada de Go-to-Market com foco em prospecção ativa — execução, metas e meios para a MentorEX.</p>
+  <div class="yellow-box"><p><strong>Premissa:</strong> O outbound da MentorEX não é venda de commodity. É venda de alta autoridade para executivos e RHs que recebem dezenas de abordagens por semana. A estratégia precisa ser mais cirúrgica do que volumosa — lead certo, mensagem certa, momento certo.</p></div>
+  <h2>Pilares da Estratégia GTM</h2>
+  <div class="three-col">
+    <div class="col-card"><h4>Canal 1 — Outbound LinkedIn</h4><p>Prospecção ativa e personalizada. Principal canal de curto prazo. Foco em RHs e CEOs de médias empresas do Sul.</p></div>
+    <div class="col-card"><h4>Canal 2 — Retomada de Dormentes</h4><p>Reativação de leads com contato anterior. ROI altíssimo — já tem contexto estabelecido e o relacionamento aquece rapidamente.</p></div>
+    <div class="col-card"><h4>Canal 3 — Indicação Estruturada</h4><p>Transformar indicações espontâneas em processo sistemático de pedidos de apresentação aos clientes ativos.</p></div>
+  </div>
+
+  <div class="phase-header"><div class="phase-label">Canal 1</div><div class="phase-title">Outbound LinkedIn — Execução Detalhada</div></div>
+  <h3>Passo 1 — Construir lista de alvos por ICP</h3>
+  <p>Antes de qualquer abordagem, construa a lista. Use LinkedIn Sales Navigator (teste grátis de 30 dias):</p>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Filtros recomendados no LinkedIn Sales Navigator</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>Cargo:</strong> "Gerente de RH" OR "Diretor de Recursos Humanos" OR "Head de Pessoas" OR "Chief People Officer" OR "Diretor de DHO" OR "CEO" OR "Diretor Executivo"<br><br>
+      <strong>Localização:</strong> Paraná, Santa Catarina, Rio Grande do Sul<br><br>
+      <strong>Porte:</strong> 51–200 + 201–500 + 501–1000 funcionários<br><br>
+      <strong>Setor:</strong> Transporte e logística, Cooperativas, Alimentício, Financeiro, Varejo, Saúde<br><br>
+      <strong>Meta de lista:</strong> 150–200 contatos qualificados por mês. PG trabalha 38 por semana → 4 semanas para processar a lista.</p>
+    </div></div></div>
+  </div>
+  <h3>Passo 2 — Pesquisa de 5 minutos por contato antes de abordar</h3>
+  <p>Para cada lead identifique: crescimento recente da empresa (vagas abertas, notícias), mudanças de liderança (novos diretores), eventos externos (expansão, fusão). Isso transforma abordagem genérica em conversa relevante.</p>
+  <h3>Passo 3 — Sequência de 8 toques em 21 dias</h3>
+  <table class="kb-table">
+    <thead><tr><th>Toque</th><th>Dia</th><th>Canal</th><th>Conteúdo</th><th>Objetivo</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>0</td><td>LinkedIn</td><td>Convite com nota — 1 fato específico da empresa</td><td>Conexão</td></tr>
+      <tr><td>2</td><td>2</td><td>LinkedIn</td><td>Mensagem pós-conexão: observação sobre o setor/momento, sem pitch</td><td>Abrir diálogo</td></tr>
+      <tr><td>3</td><td>5</td><td>LinkedIn</td><td>Insight ou dado de mercado relevante para o setor deles</td><td>Posicionar como especialista</td></tr>
+      <tr><td>4</td><td>8</td><td>LinkedIn</td><td>Pergunta direta e específica sobre a dor</td><td>Qualificar interesse</td></tr>
+      <tr><td>5</td><td>12</td><td>Email</td><td>Case de referência de empresa similar (mesmo setor ou desafio)</td><td>Credibilidade</td></tr>
+      <tr><td>6</td><td>15</td><td>LinkedIn</td><td>Proposta de conversa de 20 minutos — com data específica</td><td>Agendamento</td></tr>
+      <tr><td>7</td><td>19</td><td>WhatsApp</td><td>Toque curto de reafirmação do convite</td><td>Agendamento</td></tr>
+      <tr><td>8</td><td>21</td><td>LinkedIn</td><td>Toque de fechamento: "Fico por aqui se isso voltar à pauta."</td><td>Manter relacionamento</td></tr>
+    </tbody>
+  </table>
+  <div class="warning-box"><p><strong>Importante:</strong> 8 toques em 21 dias é humanamente executável para ~5 leads simultâneos em cadências diferentes. Para 38 leads/semana, é necessário automação (HubSpot Sales Pro) ou SDR. No momento atual, priorize qualidade (10–15 leads/semana bem trabalhados) sobre volume.</p></div>
+  <h3>Metas por canal — Outbound</h3>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">Taxa de aceite de conexão</div><div class="kpi-value">35–50%</div><div class="kpi-sub">LinkedIn Sul, cargos de liderança</div></div>
+    <div class="kpi-card kpi-warn"><div class="kpi-label">Taxa de resposta (toques 2–4)</div><div class="kpi-value warn">10–20%</div><div class="kpi-sub">Outbound frio sem indicação</div></div>
+    <div class="kpi-card kpi-ok"><div class="kpi-label">Taxa de agendamento</div><div class="kpi-value ok">5–10%</div><div class="kpi-sub">Dos leads que responderam</div></div>
+  </div>
+
+  <div class="phase-header"><div class="phase-label">Canal 2</div><div class="phase-title">Retomada de Dormentes — Execução</div></div>
+  <div class="accordion">
+    <div class="accordion-item"><button class="accordion-header" onclick="toggleAcc(this)"><span>Como escolher os 10 leads para retomar (priorização)</span><span class="acc-icon">▼</span></button><div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>Pontuação de prioridade:</strong><br><br>
+      +3 pts: Chegou até proposta (maior investimento de ambas as partes)<br>
+      +2 pts: Reunião de diagnóstico realizada<br>
+      +2 pts: Empresa de grande porte (maior ticket potencial)<br>
+      +1 pt: Dormência de 30–90 dias (mais fresco na memória)<br>
+      +1 pt: Decisão dependia só do gestor de RH (barreira menor)<br>
+      −2 pts: Perdido por corte de orçamento (pode ainda estar cortado)<br>
+      −3 pts: Perdido por "não é prioridade da diretoria" (barreira mais alta)<br><br>
+      Selecione os 10 com maior pontuação.</p>
+    </div></div></div>
+  </div>
+  <div class="script-box"><div class="script-label">Mensagem de retomada — template base</div><p>"Olá [Nome], tudo bem? Sou [nome] da MentorEX. A gente havia conversado sobre [contexto específico] em [período]. Fiquei pensando na situação que você me contou sobre [dor específica mapeada] e queria saber como está evoluindo isso. Algo mudou desde a nossa última conversa? Faria sentido trocarmos uma ideia de 20 minutos esta semana?"</p></div>
+  <div class="highlight-box"><p><strong>Referência interna:</strong> Rodada de retomada de 10 leads da MentorEX: 6 responderam (60%), 1 converteu em reunião com alto potencial. Taxa de 60% de resposta — o relacionamento anterior tem valor real.</p></div>
+
+  <div class="phase-header"><div class="phase-label">Canal 3</div><div class="phase-title">Indicação Estruturada — Execução</div></div>
+  <div class="build-steps">
+    <div class="build-step"><div class="step-num">1</div><div class="step-content"><h4>Identificar os "embaixadores" — clientes com NPS alto e rede relevante</h4><p>NPS 9–10 + empresa com filiais ou parceiros no mesmo segmento. Liste os 5–10 mais propensos a indicar ativamente.</p></div></div>
+    <div class="build-step"><div class="step-num">2</div><div class="step-content"><h4>Pedir indicação no momento certo</h4><p>Logo após entrega positiva (NPS alto, depoimento espontâneo, promoção de um participante). Neste momento o cliente está emocionalmente conectado ao resultado.</p></div></div>
+    <div class="build-step"><div class="step-num">3</div><div class="step-content"><h4>Pedir introdução, não apenas o nome</h4><p>"Você toparia me apresentar para a [Nome] da [Empresa X]? Posso mandar um texto para você encaminhar se preferir." Facilite ao máximo o ato de indicar.</p></div></div>
+    <div class="build-step"><div class="step-num">4</div><div class="step-content"><h4>Fechar o loop — avisar o indicador do resultado</h4><p>"Falei com a [Nome] que você nos apresentou — foi uma ótima conversa, obrigado!" Reforça o comportamento e mantém o relacionamento aquecido para futuras indicações.</p></div></div>
+  </div>
+
+  <h2>Priorização de Canais por Horizonte</h2>
+  <table class="kb-table">
+    <thead><tr><th>Horizonte</th><th>Canal prioritário</th><th>Por quê</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Agora (0–3 meses)</strong></td><td>Retomada de dormentes + pedidos de indicação</td><td>Menor ciclo de conversão, maior taxa de sucesso, zero custo adicional</td></tr>
+      <tr><td><strong>Curto prazo (3–6 meses)</strong></td><td>Outbound LinkedIn (10–15 leads/semana com qualidade)</td><td>Processo já está sendo validado. Ampliar com qualidade antes de volume.</td></tr>
+      <tr><td><strong>Médio prazo (6–12 meses)</strong></td><td>Outbound escalado + SDR contratado</td><td>Com processo validado e conversão melhorada, SDR para topo de funil</td></tr>
+      <tr><td><strong>Longo prazo (12+ meses)</strong></td><td>Inbound (conteúdo + LinkedIn pessoal dos sócios)</td><td>Constrói audiência que gera leads aquecidos sem esforço constante</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box"><p><strong>Sobre inbound para a MentorEX:</strong> Os sócios têm autoridade técnica genuína em liderança — isso é um ativo de conteúdo enorme. Posts regulares no LinkedIn pessoal sobre liderança e casos reais (anonimizados) constroem audiência que eventualmente vira lead inbound. Retorno é lento (6–12 meses), mas os leads chegam já aquecidos e com alta taxa de conversão.</p></div>
+
+  <h2>KPIs do GTM Outbound</h2>
+  <table class="kb-table">
+    <thead><tr><th>Métrica</th><th>Frequência</th><th>Meta fase atual</th><th>Meta escala</th></tr></thead>
+    <tbody>
+      <tr><td>Novos leads únicos/semana</td><td>Semanal</td><td>10–15</td><td>37–38</td></tr>
+      <tr><td>Aceite de conexão LinkedIn/semana</td><td>Semanal</td><td>5–7</td><td>15–20</td></tr>
+      <tr><td>Respostas recebidas/semana</td><td>Semanal</td><td>2–4</td><td>5–10</td></tr>
+      <tr><td>Reuniões de diagnóstico agendadas/mês</td><td>Mensal</td><td>4–6</td><td>10–12</td></tr>
+      <tr><td>Leads retomados/mês</td><td>Mensal</td><td>10</td><td>20</td></tr>
+      <tr><td>Indicações pedidas/mês</td><td>Mensal</td><td>3–5</td><td>8–10</td></tr>
+      <tr><td>Taxa de conversão lead → reunião</td><td>Mensal</td><td>10–15%</td><td>20%+</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</main>
+<script>
+function navigate(pageId, title, tag) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const t = document.getElementById('page-' + pageId);
+  if (t) t.classList.add('active');
+  document.getElementById('page-title').textContent = title;
+  document.getElementById('page-tag').textContent = tag;
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+    if (item.dataset.page === pageId) item.classList.add('active');
+  });
+  closeSidebar();
+  document.getElementById('main').scrollTo(0, 0);
+}
+function toggleAcc(header) {
+  const item = header.parentElement;
+  const body = item.querySelector('.accordion-body');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.accordion-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.accordion-body').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+function toggleCheck(box) { box.classList.toggle('checked'); }
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+</script>
+</body>
+</html>
