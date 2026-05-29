@@ -254,6 +254,101 @@ li { margin-bottom: 5px; line-height: 1.6; }
   .hero-stats, .kpi-grid, .ritual-grid, .two-col, .three-col, .comp-grid, .onb-weeks, .roi-numbers, .sim-grid, .fost-nav-grid { grid-template-columns: 1fr; }
   h1 { font-size: 22px; }
 }
+
+/* PRINT */
+@media print {
+  /* Reset layout — sem sidebar, sem topbar */
+  #sidebar, #topbar, #sidebar-overlay, #hamburger { display: none !important; }
+
+  body {
+    display: block !important;
+    background: #FAF0E6 !important;
+    color: #3A3A3A !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Main ocupa tela toda */
+  #main {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Todas as páginas visíveis em sequência */
+  .page {
+    display: block !important;
+    padding: 28pt 36pt 28pt !important;
+    max-width: 100% !important;
+    animation: none !important;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-of-type {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Tipografia */
+  h1 { font-size: 20pt !important; margin-bottom: 8pt !important; }
+  h2 { font-size: 13pt !important; margin: 20pt 0 10pt !important; }
+  h3 { font-size: 11pt !important; margin: 14pt 0 6pt !important; }
+  p, li { font-size: 10pt !important; }
+  .page-intro { font-size: 10pt !important; }
+
+  /* Evitar quebras no meio de blocos importantes */
+  .funnel-stage, .checklist-item, .build-step, .ritual-card,
+  .kpi-card, .stat-card, .col-card, .comp-card, .accordion-item,
+  .timeline-item, .onb-week, .script-box, .formula-box,
+  .highlight-box, .info-box, .warning-box, .yellow-box,
+  .roi-card, .phase-header, .fost-nav-card {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Tabelas: cabeçalho repete em cada página, linhas não quebram */
+  .kb-table { page-break-inside: auto; break-inside: auto; }
+  .kb-table thead { display: table-header-group; }
+  .kb-table tr { page-break-inside: avoid; break-inside: avoid; }
+
+  /* Grids colapsam para 1 coluna (evita conteúdo cortado na margem) */
+  .hero-stats, .kpi-grid, .ritual-grid, .two-col, .three-col,
+  .comp-grid, .onb-weeks, .roi-numbers, .sim-grid, .fost-nav-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Accordions: forçar tudo aberto (max-height travado por JS) */
+  .accordion-body {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .accordion-item { page-break-inside: avoid; break-inside: avoid; }
+
+  /* Links — mostrar URL apenas para links externos relevantes */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #6A5A4A;
+    font-weight: 400;
+  }
+  /* Exceção: links de navegação interna (onclick) não precisam de URL */
+  .nav-item a::after, .fost-nav-card a::after { content: none; }
+
+  /* Botões e elementos de UI interativos — ocultar */
+  .check-box, #hamburger, .acc-icon, .topbar-tag { display: none !important; }
+  .checklist-item { padding-left: 0 !important; }
+
+  /* Margens de página */
+  @page {
+    margin: 18mm 20mm 18mm 20mm;
+    size: A4 portrait;
+  }
+  @page :first { margin-top: 24mm; }
+}
 </style>
 </head>
 <body>
@@ -304,6 +399,7 @@ li { margin-bottom: 5px; line-height: 1.6; }
     <div class="nav-item" data-page="cf-challenger" onclick="navigate('cf-challenger','The Challenger Sales','Fost')"><span class="nav-icon">—</span> Challenger Sales</div>
     <div class="nav-item" data-page="cf-capacity" onclick="navigate('cf-capacity','Capacity & Metas','Fost')"><span class="nav-icon">—</span> Capacity & Metas</div>
     <div class="nav-item" data-page="cf-gtm" onclick="navigate('cf-gtm','GTM Outbound','Fost')"><span class="nav-icon">—</span> GTM Outbound</div>
+    <div class="nav-item" data-page="sessoes" onclick="navigate('sessoes','Registro de Sessões','Fost')"><span class="nav-icon">—</span> Registro de Sessões</div>
   </div>
 </nav>
 <div id="topbar">
@@ -311,6 +407,7 @@ li { margin-bottom: 5px; line-height: 1.6; }
   <div id="page-title">Home</div>
   <span class="topbar-tag" id="page-tag">KB</span>
   <span class="topbar-tag" style="cursor:pointer;background:rgba(240,124,16,0.12);border-color:rgba(240,124,16,0.4)" onclick="navigate('cf-home','Consultoria Fost','Fost');setTimeout(()=>document.getElementById('fost-section').scrollIntoView({behavior:'smooth'}),100)">&#9679; Consultoria Fost</span>
+  <span class="topbar-tag" style="cursor:pointer;background:rgba(46,125,82,0.08);border-color:rgba(46,125,82,0.25);color:#2E7D52;margin-left:auto" onclick="window.print()" title="Exportar como PDF (Ctrl+P)">⬇ Exportar PDF</span>
 </div>
 <main id="main">
 <!-- HOME -->
@@ -443,6 +540,7 @@ Leads/semana   = Leads/mês ÷ 4</div>
   </div>
   <h2>Melhorias Recomendadas — Consultoria Fost</h2>
   <div class="yellow-box"><p>Construídas a partir das sessões do programa de Vendas Estruturadas. Adapte valores, datas e contextos para cada cliente — o princípio estrutural permanece o mesmo.</p></div>
+  <div class="info-box"><p><strong>Referência metodológica:</strong> As 4 melhorias abaixo são aplicações diretas do <strong>Challenger Sale</strong> (Teach → Tailor → Take Control). ROI e urgência = Ensinar. Diferencial por cliente = Personalizar. Próximo passo datado = Assumir o Controle. Ver framework completo em <span style="cursor:pointer;text-decoration:underline;color:var(--blue)" onclick="navigate('cf-challenger','The Challenger Sales','Fost')">Consultoria Fost → Challenger Sales</span>.</p></div>
   <h3>1. ROI no Slide de Investimento — "O que custa não fazer nada"</h3>
   <div class="roi-card">
     <div class="roi-card-title">Calculadora de Custo de Turnover — Case Frísia</div>
@@ -503,7 +601,7 @@ Leads/semana   = Leads/mês ÷ 4</div>
     <div class="kpi-card"><div class="kpi-label">Ciclo Médio de Vendas</div><div class="kpi-value">4 meses</div><div class="kpi-sub">Bench: 3 – 6 meses</div></div>
     <div class="kpi-card kpi-info"><div class="kpi-label">Ticket Médio</div><div class="kpi-value info">R$108k</div><div class="kpi-sub">Referência 2024</div></div>
     <div class="kpi-card kpi-warn"><div class="kpi-label">Leads / Semana (atual)</div><div class="kpi-value warn">~X</div><div class="kpi-sub">Meta (close 1/week): 13</div></div>
-    <div class="kpi-card kpi-ok"><div class="kpi-label">Capacity (trilhas simultâneas)</div><div class="kpi-value ok">17</div><div class="kpi-sub">Teórico · Real com buffer: ~12–14</div></div>
+    <div class="kpi-card kpi-ok"><div class="kpi-label">Capacity (trilhas simultâneas)</div><div class="kpi-value ok">17</div><div class="kpi-sub">Teórico (528h × 40% entrega ÷ 12h/cliente) · Real com buffer: a refinar · Histórico: máx. 8</div></div>
   </div>
   <h2>Fórmulas</h2>
   <div class="formula-box"><div class="formula-label">Taxa de Conversão</div><div class="formula">Taxa = (Contratos Fechados ÷ Total de Leads) × 100
@@ -654,6 +752,7 @@ Ex com 20%: 12 ÷ 0,20 = 60 leads/mês</div><div class="formula-result">Dobrar a
 <div class="page" id="page-scripts">
   <h1>Scripts de Abordagem</h1>
   <p class="page-intro">Templates para cada etapa. Use como base — sempre personalize com contexto real.</p>
+  <div class="info-box"><p><strong>Estrutura por trás dos scripts:</strong> Os scripts seguem a lógica do <strong>Challenger Sale</strong> — Ensinar → Personalizar → Assumir o Controle. Cada mensagem existe para avançar uma dessas três capacidades, não apenas para "fazer contato". Ver framework completo em <span style="cursor:pointer;text-decoration:underline;color:var(--blue)" onclick="navigate('cf-challenger','The Challenger Sales','Fost')">Consultoria Fost → Challenger Sales</span>.</p></div>
   <div class="warning-box"><p><strong>Regra:</strong> Nunca envie um script copiado. Substitua sempre os campos em [colchetes]. Mensagem personalizada converte 3–5× mais que genérica.</p></div>
   <h2>Abordagem LinkedIn — Outbound</h2>
   <div class="script-box"><div class="script-label">Convite de Conexão (até 300 caracteres)</div><p>"Olá [Nome], sou [seu nome] da MentorEX Academy. Acompanho o crescimento da [Empresa] e acredito que temos sinergia na pauta de desenvolvimento de liderança. Seria ótimo conectar!"</p></div>
@@ -717,6 +816,40 @@ Ex com 20%: 12 ÷ 0,20 = 60 leads/mês</div><div class="formula-result">Dobrar a
     <div class="comp-card featured"><h4>Perfil Ideal (próxima contratação)</h4><ul><li>Executivo 100% dedicado ao comercial</li><li>Background em vendas B2B consultivas</li><li>Experiência com RH/T&D como público</li><li>Sênior o suficiente para relacionamento C-level</li><li>Disciplina com CRM e processo</li><li>Familiaridade com ciclos de 3–6 meses</li></ul></div>
   </div>
 </div>
+<!-- SESSÕES -->
+<div class="page" id="page-sessoes">
+  <h1>Registro de Sessões</h1>
+  <p class="page-intro">Log cronológico das sessões de consultoria — decisões tomadas, racional por trás delas e o que ficou em aberto.</p>
+  <div class="info-box"><p>Este registro existe para que qualquer sócio possa entender <em>por que</em> uma decisão foi tomada, não só <em>o que</em> foi decidido. Atualize após cada sessão com a Rafaela.</p></div>
+
+  <h2>Em Andamento — Próximos Passos Abertos</h2>
+  <div class="warning-box"><p><strong>Atualizado após Sessão 1 (29/05/2026).</strong> Itens abaixo estão pendentes de execução.</p></div>
+  <div class="checklist">
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Bruno — calcular capacity refinado</strong>: incluir tempo de preparação, deslocamento e atividades não-entrega. Compartilhar cenários com a equipe. <span style="color:var(--accent);font-size:12px">Sessão 1</span></div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>PG — fazer backup do CRM atual</strong>: dados salvos localmente na máquina do PG. Exportar para CSV antes da migração. <span style="color:var(--accent);font-size:12px">Sessão 1</span></div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Migração para HubSpot</strong>: agendar sessão dedicada com a Rafaela para configurar juntos. Ver roteiro na seção <em>Consultoria Fost → CRM</em>. <span style="color:var(--accent);font-size:12px">Sessão 1</span></div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Rafaela — enviar passo a passo</strong> para conectar banco de dados do CRM atual no WhatsApp. <span style="color:var(--accent);font-size:12px">Sessão 1</span></div></div>
+    <div class="checklist-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><strong>Avaliar <a href="https://meetrox.ai/" target="_blank" style="color:var(--accent)">MeetRox</a></strong>: ferramenta de transcrição e score de aderência ao script. Bruno confirmou interesse. Testar com a próxima reunião de diagnóstico. <span style="color:var(--accent);font-size:12px">Sessão 1</span></div></div>
+  </div>
+
+  <h2>Sessão 1 — Parte 1</h2>
+  <div class="timeline-label" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:16px">29 de maio de 2026 · Consultora: Rafaela Tulio (Foch)</div>
+  <div class="three-col">
+    <div class="col-card"><h4>Capacity</h4><p>Cálculo refinado: 2 sócios, meio período → ~176h/mês de entrega → 44 trilhas teóricas. Máximo histórico real: 8 clientes. Conclusão: o cálculo precisa incluir prep, deslocamento e buffer antes de virar meta.</p></div>
+    <div class="col-card"><h4>Modelo de Proposta</h4><p>4 melhorias definidas: (1) ROI / custo de não agir, (2) urgência baseada em evidência, (3) próximo passo datado ao final, (4) diferencial específico por cliente — não genérico. Estudo de caso: proposta Frísia.</p></div>
+    <div class="col-card"><h4>CRM & Funil</h4><p>Diagnóstico: follow-up é atividade, não etapa. Nova estrutura de 7 etapas proposta. Recomendação: migrar para HubSpot gratuito (2 usuários, pipeline customizável, integração Gmail, rastreamento de abertura).</p></div>
+  </div>
+  <div class="highlight-box" style="margin-top:12px"><p><strong>Ferramenta indicada:</strong> <a href="https://meetrox.ai/" target="_blank" style="color:#1E6B42;font-weight:600">MeetRox</a> — grava e transcreve reuniões, preenche checklists automaticamente, gera score de aderência ao script e permite busca por termos em todas as transcrições. Útil para call reviews semanais.</p></div>
+
+  <h2>Sessão 0 — Diagnóstico</h2>
+  <div class="timeline-label" style="font-size:11px;color:var(--text-dim);font-weight:400;margin-bottom:16px">22 de maio de 2026 · Consultora: Rafaela Tulio (Foch)</div>
+  <div class="three-col">
+    <div class="col-card"><h4>Diagnóstico Comercial</h4><p>Dois canais únicos até então: indicação e recompra (65% carteira). PG deslocado para o comercial 2 meses antes. CRM próprio criado com IA via Replit. Prospecção ativa no LinkedIn iniciada com scripts e follow-ups padronizados.</p></div>
+    <div class="col-card"><h4>Problema Central</h4><p>Taxa de conversão de 8% — abaixo do benchmark B2B (40–60%). Rafaela: com 8% precisariam de 150 leads/mês para atingir 12 clientes; com 20%, bastam 60. <strong>Decisão:</strong> priorizar conversão antes de escalar topo de funil.</p></div>
+    <div class="col-card"><h4>Outras Métricas</h4><p>86 propostas trabalhadas no ano, 7 fechadas. Ciclo médio: 4 meses (desvio alto — de 3 dias a 6 meses). Capacity operacional estimado: 480h/mês. Retomada de leads dormentes: 6/10 responderam, 1 reunião agendada.</p></div>
+  </div>
+  <div class="info-box" style="margin-top:12px"><p><strong>Concorrente principal identificado:</strong> Conquer Business. <strong>Objeções mais frequentes:</strong> mudança de estratégia ou data pela diretoria · troca do gestor de RH · falta de orçamento.</p></div>
+</div>
 <!-- CF: HOME (LANDING PAGE CONSULTORIA FOST) -->
 <div class="page" id="page-cf-home">
   <h1>Consultoria Fost</h1>
@@ -753,6 +886,11 @@ Ex com 20%: 12 ÷ 0,20 = 60 leads/mês</div><div class="formula-result">Dobrar a
       <div class="nav-arrow">→</div>
       <h4>GTM Outbound</h4>
       <p>Estratégia detalhada de Go-to-Market — 3 canais de prospecção com execução, sequência de toques e metas por canal.</p>
+    </div>
+    <div class="fost-nav-card" onclick="navigate('sessoes','Registro de Sessões','Fost')">
+      <div class="nav-arrow">→</div>
+      <h4>Registro de Sessões</h4>
+      <p>Log cronológico das sessões — decisões tomadas, racional por trás delas e próximos passos em aberto.</p>
     </div>
   </div>
 </div>
@@ -1067,6 +1205,7 @@ Ex com 20%: 12 ÷ 0,20 = 60 leads/mês</div><div class="formula-result">Dobrar a
   <h2>Por que o Capacity Importa</h2>
   <p>O capacity define o <strong>teto realista de crescimento</strong> e guia onde investir: se há capacity ocioso, o problema é o topo de funil. Se o capacity está cheio, o problema é operacional — precisa contratar/escalar entrega antes de vender mais. Sem esse número, qualquer meta de vendas é chute.</p>
   <h2>Capacity Atual — MentorEX</h2>
+  <div class="yellow-box"><p><strong>Nota (Sessão 1, mai/2026):</strong> Existem três versões deste cálculo em circulação — (1) 480h/mês (Sessão 0: 3 sócios × 40h × 4 semanas), (2) 176h/mês para entrega (Sessão 1: 2 sócios, meio período), chegando a 44 trilhas teóricas, e (3) o número abaixo (17 trilhas), que usa 3 sócios com 40% do tempo para entrega. <strong>O número real ainda está sendo refinado</strong> — Bruno está recalculando com prep, deslocamento e buffer. O máximo histórico foi 8 clientes simultâneos. Use 17 como teto teórico, não como meta operacional.</p></div>
   <div class="sim-grid">
     <div class="sim-header">Parâmetro</div><div class="sim-header">Valor</div><div class="sim-header">Base de cálculo</div><div class="sim-header">Status</div>
     <div class="sim-cell label">Horas brutas/mês (3 sócios)</div><div class="sim-cell">528h</div><div class="sim-cell">22 dias × 8h × 3 sócios</div><div class="sim-cell good">Base</div>
